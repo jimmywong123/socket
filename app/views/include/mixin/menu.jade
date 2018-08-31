@@ -1,0 +1,19 @@
+mixin menu(menus)
+    nav.navbar.navbar-default.navbar-fixed-top
+        .container-fluid
+            .navbar-header
+                a.navbar-brand(href='/') Home
+            .collapse.navbar-collapse
+                ul.nav.navbar-nav
+                    each menuLi in menus
+                        if(menuLi.roles.includes(current_user.roleType))
+                            li
+                                a(href='#{menuLi.href}') #{menuLi.name}
+                ul.nav.navbar-nav.navbar-right
+                    li.dropdown
+                        a.dropdown-toggle(href="#",class="dropdown-toggle",data-toggle="dropdown",role="button",aria-haspopup="true",aria-expanded="false") More
+                            span.caret
+                        ul.dropdown-menu
+                            li
+                                a(href="/signout") Sign Out
+

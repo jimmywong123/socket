@@ -1,0 +1,37 @@
+- var _action = user._action == 'edit' ? '#' : '/users/'
+- var _method = user._action == 'edit' ? ""  : "post"
+- var _type   = user._action == 'edit' ? "button"  : "submit"
+- var _url  = user._action == 'edit' ?  "/users/" + user.id + "/" : ""
+form(id='user-#{ user._action}-form',action="#{_action}", method="#{_method}",role='form')
+  .row
+    .col-md-8
+      each n in ['user.username','user.password','user.roleType']
+        - m = eval(n);
+        - name = n.split('.')[1];
+        - isType = n.indexOf('Type') === (n.length - 4)
+
+        .form-group.field
+          label #{name}
+          br
+          if(isType)
+            select.form-control(name="#{name}")
+              each typeItem in Enumeration[name]
+                if(typeItem.value === m)
+                  option(value='#{typeItem.value}',selected) #{typeItem.title}
+                else
+                  option(value='#{typeItem.value}') #{typeItem.title}
+          else if (name === 'password')
+            input.form-control(type='password',name="#{name}")
+          else
+            input.form-control(type='text',name="#{name}" ,value="#{ m == undefined ? '' : m }")
+
+      .actions
+        input.btn.btn-default.js_edit_btn(type='#{_type}',value='Submit',data-url='#{_url}')
+
+    .col-md-4
+      .form-group.field
+        label logo
+        br
+        .js_upload_img(data-name="avatar" ,data-value="#{ user.avatar || '/img/logo_small.png' }")
+
+

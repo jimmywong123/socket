@@ -1,0 +1,21 @@
+script.
+    var hostPath = '#{Config.host}'
+
+if(Config.debug)
+    script(src='/jspm_packages/system.js')
+    script(src='/config.js')
+    script.
+        System.import('/app/main.js')
+else
+    script(src='/dist/main_build.js')
+
+
+if(editError)
+    .modal.fade#editErrorModal(tabindex='-1',role='dialog',aria-labelledby='editErrorModalLabel')
+        .modal-dialog(role='document')
+            .modal-content
+                .modal-header
+                    button.close(type='button',data-dismiss='modal',aria-label='Close')
+                        span(aria-hidden='true') &times;
+                    h4.modal-title#editErrorModalLabel Fill in the wrong
+                .modal-body #{editError}

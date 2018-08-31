@@ -1,0 +1,39 @@
+extends ../layouts/layout
+
+block content
+  +menu(Config.menus)
+  h1
+    span Listing users
+    small.pull-right: a(href='/users/new') New User
+
+  hr
+  form.select-form(method='get',action='/users')
+    .input-group
+      input.form-control(type='text',name='kw',value='#{kw || ""}',placeholder='Select username')
+      span.input-group-btn
+        button.btn.btn-default(type="submit") Select
+  hr
+  table.table
+    thead
+      tr
+        each n in ['username','roleType','lastAt','createdAt','updatedAt']
+          th
+            span #{n}
+            span.page-sort
+              a(href='/settings/#{type}?kw=#{kw || ""}&sortby=#{n}'): i.glyphicon.glyphicon-chevron-up
+              a(href='/settings/#{type}?kw=#{kw || ""}&sortby=#{n} DESC'): i.glyphicon.glyphicon-chevron-down
+        th(colspan="3")
+    tbody
+      each item in list
+        tr
+          each n in ['item.username','item.roleTypeTitle','item.lastAtFormat','item.createdAtFormat','item.updatedAtFormat']
+            td #{ eval(n) }
+          td 
+            a(href='/users/#{ item.id}') Show
+          td 
+            a(href='/users/#{ item.id}/edit') Edit
+          //td
+          //  a(onclick="click_del('/users/#{ item.id}/')") Delete
+
+  +pagination(current_page, pages, all_count, '/users?kw=' + (kw || '') + '&sortby=' + sortby + '&page=')
+

@@ -1,0 +1,24 @@
+extends ../layouts/layout
+
+block content
+  //script(src='/app/socket/hichat.js')
+  //script(src='/node_modules/socket.io-client/dist/socket.io.js')
+  //<script src="socket.io/socket.io.js"></script>
+  +menu(Config.menus)
+  h1
+    span Socket test
+    //small.pull-right: a(href='/users/new') New User
+  hr
+  #chatBody.form-inline
+    ul#userList.form-group(style='width:10%;height:500px;background-color:#fff;overflow:scroll;padding:5px;border:1px solid #C0C0C0;margin-left:25%')
+    .wrapper.form-group(style='margin-left:10px')
+      ul#chat(style='width:400px;height:400px;background-color:#fff;overflow:scroll;padding:10px;border:1px solid #C0C0C0')
+      .controls
+        .form-inline(style='margin-top:10px')
+          input#emoji.form-group.btn.btn-default(type='button',value='emoji')
+          input#sendImg.form-group.btn.btn-default(type='button',value='image',style='margin-left:1%')
+          input#img(type='file',value='img',style='display:none')
+          br
+          textarea#message.form-control(rows='3',placeHolder='enter to send',style='margin-top:10px;width:80%')
+          input#sendBtn.btn.btn-info(type='button',value='SEND',style='margin-left:5px')
+        #emojiWrapper

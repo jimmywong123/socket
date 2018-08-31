@@ -1,0 +1,21 @@
+extends layouts/layout
+
+block content
+  +menu(Config.menus)
+  h1= title
+  p Welcome to Hired china , #{current_user.roleTypeTitle} #{current_user.username}
+  hr
+  div
+    h3 plugins
+
+    h4 select multiple
+    .form-group.field
+      label Area
+      br
+      select.form-control.js_select_multiple(multiple,data-name="areas",data-type="area",data-value="1,2")
+
+    h4 select
+    .form-group.field
+      label Nationality
+      br
+      select.form-control.js_select(name="nationality",data-type="nationality",data-value="2")

@@ -1,0 +1,21 @@
+extends ../layouts/layout
+
+block content
+    .panel
+
+        .inner
+
+            form.form-horizontal(action='/login',method='post')
+                .form-group
+                    label.control-label.col-sm-2(for='username') 用户名
+                    .col-sm-10
+                        input#username.input-lg(type='text',name='username',size='30',value="#{username == undefined ? '' : username }")
+                .form-group
+                    label.control-label.col-sm-2(for='password') 密码
+                    .col-sm-10
+                        input#password.input-lg(type='password',name='password',size='30')
+                input(type='hidden',name='_csrf',value='#{csrf || ""}')
+
+                .form-group
+                    .col-sm-offset-2.col-sm-10
+                        button.btn.btn-primary(type="submit") 登录

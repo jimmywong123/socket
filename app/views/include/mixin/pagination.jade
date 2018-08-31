@@ -1,0 +1,31 @@
+// Created by user on 20/9/15.
+mixin pagination(current_page, pages, count, go_url)
+   if(pages > 1)
+      nav
+         ul.pagination
+            li
+               span total #{count} / #{pages} pages
+            if(current_page > 1)
+               li
+                  a(href='#{go_url}#{current_page - 1}',aria-label='Previous')
+                     span(aria-hidden='true') &laquo;
+            - var page_start = ((current_page - 2) > 0) ? (current_page - 2) : 1;
+            - var page_end = ((page_start + 4) >= pages) ? pages : (page_start + 4);
+            - var i = page_start
+            - for(i; i <= page_end; i++)
+               if(current_page === i)
+                  li.active
+                     a #{i}
+               else
+                  li
+                     a(href='#{go_url}#{i}') #{i}
+            if(current_page != pages)
+               li
+                  a(href='#{go_url}#{current_page + 1}',aria-label='Next')
+                     span(aria-hidden='true') &raquo;
+
+   else
+      nav
+         ul.pagination
+            li
+               span total #{count}

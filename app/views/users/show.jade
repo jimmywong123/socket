@@ -1,0 +1,19 @@
+extends ../layouts/layout
+
+block content
+  +menu(Config.menus)
+  h1
+    span Show user
+    small.pull-right
+      a(href='/users/#{ user.id}/edit') Edit
+      span |
+      a(href='/users') Back
+
+  each n in ['user.username','user.roleTypeTitle','user.lastAtFormat','user.createdAtFormat','user.updatedAtFormat']
+
+    p
+      strong #{n.split('.')[1]}:
+      span  #{eval(n)}
+
+  .thumbnail
+    img(src="#{user.avatar || '/img/logo_small.png'}")

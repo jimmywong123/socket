@@ -1,0 +1,124 @@
+{
+  "name": "socket",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "author": "Jimmy",
+  "license": "ISC",
+  "scripts": {
+    "start": "export NODE_ENV=development && ./node_modules/.bin/supervisor ./bin/www",
+    "production": "export NODE_ENV=production && ./node_modules/.bin/supervisor ./bin/www",
+    "development": "export NODE_ENV=development && ./node_modules/.bin/supervisor ./bin/www",
+    "test": "standard && ./node_modules/.bin/ava -v",
+    "build": "jspm bundle-sfx app/main public/dist/main_build.js --minify"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ThomasLiu/seed.git"
+  },
+  "keywords": [
+    "koa2",
+    "socket"
+  ],
+  "bugs": {
+    "url": "https://github.com/ThomasLiu/seed/issues"
+  },
+  "homepage": "https://github.com/ThomasLiu/seed#readme",
+  "dependencies": {
+    "bcryptjs": "^2.3.0",
+    "bluebird": "^3.4.1",
+    "circular-json": "^0.5.5",
+    "co": "^4.6.0",
+    "debug": "^2.2.0",
+    "gm": "^1.23.0",
+    "http": "0.0.0",
+    "ioredis": "^2.2.0",
+    "jade": "^1.11.0",
+    "jsonwebtoken": "^7.1.7",
+    "kcors": "^1.2.1",
+    "koa": "^2.0.0",
+    "koa-better-body": "^3.0.0",
+    "koa-bodyparser": "^2.2.0",
+    "koa-compress": "^1.0.9",
+    "koa-convert": "^1.2.0",
+    "koa-csrf": "^2.5.0",
+    "koa-favicon": "^1.2.1",
+    "koa-generic-session": "^1.11.3",
+    "koa-helmet": "^2.0.0",
+    "koa-json": "^1.1.3",
+    "koa-less": "0.0.3",
+    "koa-log4": "^2.0.1",
+    "koa-logger": "^1.3.0",
+    "koa-mount": "^3.0.0",
+    "koa-redis": "^2.1.1",
+    "koa-router": "^5.4.0",
+    "koa-static": "^2.0.0",
+    "koa-static-cache": "^3.1.7",
+    "koa-static-router": "^1.1.7",
+    "koa-static-server": "^1.3.4",
+    "koa-views": "^4.1.0",
+    "kp": "^1.1.0",
+    "lodash": "^4.14.1",
+    "mount-controllers": "^1.0.8",
+    "mount-middlewares": "^1.0.7",
+    "mount-models": "^1.0.8",
+    "mysql": "^2.0.0-alpha8",
+    "pm2": "^1.1.3",
+    "qn": "^1.3.0",
+    "require-directory": "^2.1.1",
+    "runkoa": "^1.5.2",
+    "sequelize": "^3.23.6",
+    "socket.io": "^2.1.1",
+    "validator": "^5.5.0"
+  },
+  "devDependencies": {
+    "ava": "^0.15.2",
+    "gulp": "^3.9.1",
+    "gulp-ava": "^0.12.1",
+    "sinon": "^1.17.5",
+    "standard": "^7.1.2",
+    "superkoa": "^1.0.1",
+    "supervisor": "^0.11.0",
+    "zombie": "^4.2.1"
+  },
+  "engines": {
+    "node": ">= 4.0"
+  },
+  "standard": {
+    "globals": [
+      "log",
+      "info",
+      "warn",
+      "error",
+      "dir",
+      "time",
+      "timeEnd",
+      "trace",
+      "assert"
+    ],
+    "ignore": [
+      "app/",
+      "public/**/*"
+    ]
+  },
+  "jspm": {
+    "directories": {
+      "baseURL": "public"
+    },
+    "dependencies": {
+      "bootstrap": "github:twbs/bootstrap@^3.3.7",
+      "cropper": "npm:cropper@^2.3.4",
+      "css": "github:systemjs/plugin-css@^0.1.26",
+      "jquery": "github:components/jquery@^3.1.0",
+      "socket.io": "npm:socket.io@^2.1.1",
+      "socket.io-client": "github:socketio/socket.io-client@^2.1.1",
+      "socket.io-parser": "npm:socket.io-parser@^3.2.0"
+    },
+    "devDependencies": {
+      "babel": "npm:babel-core@^5.8.24",
+      "babel-runtime": "npm:babel-runtime@^5.8.24",
+      "clean-css": "npm:clean-css@^3.4.10",
+      "core-js": "npm:core-js@^1.1.4"
+    }
+  }
+}

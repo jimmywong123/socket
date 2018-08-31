@@ -1,0 +1,11 @@
+extends ../layouts/layout
+
+block content
+  +menu(Config.menus)
+  h1
+    span New user
+    small.pull-right
+      a(href='/users') Back
+  
+  include user
+

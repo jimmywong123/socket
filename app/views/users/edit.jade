@@ -1,0 +1,14 @@
+extends ../layouts/layout
+
+block content
+  +menu(Config.menus)
+  h1
+    span Editing user
+    small.pull-right
+      a(href='/users/#{ user.id}') Show
+      span |
+      a(href='/users') Back
+
+  include user
+
+
