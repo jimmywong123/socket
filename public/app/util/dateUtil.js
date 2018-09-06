@@ -1,10 +1,11 @@
+'format es6'
 // 格式化时间
-exports.format = function (date) {
+exports.format = (date) => {
     if (date == null)
         return null;
     date = new Date(date);
     let format = 'MM-dd hh:mm';
-    var o = {
+    let o = {
         "M+": date.getMonth() + 1,                 //月份   
         "d+": date.getDate(),                    //日   
         "h+": date.getHours(),                   //小时   

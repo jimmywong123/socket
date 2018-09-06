@@ -16,6 +16,8 @@ System.config({
 
   map: {
     "babel": "npm:babel-core@5.8.38",
+    "babel-core": "npm:babel-core@5.8.38",
+    "babel-core-runtime": "npm:babel-runtime@5.8.38",
     "babel-runtime": "npm:babel-runtime@5.8.38",
     "bootstrap": "github:twbs/bootstrap@3.3.7",
     "clean-css": "npm:clean-css@3.4.19",

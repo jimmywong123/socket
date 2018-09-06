@@ -1,8 +1,8 @@
 "use strict"
 
-import io from '../../jspm_packages/npm/socket.io-client@2.1.1/dist/socket.io'
+//import io from '../../jspm_packages/npm/socket.io-client@2.1.1/dist/socket.io'
 import dateUtil from '../util/dateUtil'
-//import io from 'socket.io-client@2.1.1/dist/socket.io'
+import io from 'socket.io-client'
 
 export function hichatfunction() {
     //实例并初始化我们的hichat程序
