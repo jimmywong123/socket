@@ -19,8 +19,7 @@ class socketServer {
     that.io.on('connection', (socket) => {
       //查看最近的联系人列表
       socket.on('queryLastContacts', async function (msg) {
-        let ip = socket.request.headers.origin;//socket.handshake.headers.origin
-        console.log(socket);
+        let ip = socket.request.headers.origin || socket.request.headers.referer.split('/socket')[0];//socket.handshake.headers.origin
         //存储该用户socket
         that.socketList[`${ip}-${msg.senderId}`] = socket;
         // cache.set(`${ip}-${msg.senderId}`,socket);
@@ -47,6 +46,7 @@ class socketServer {
 
       //查看最近的聊天信息
       socket.on('queryChat', async function (msg) {
+        log.info(new Date());
         let transaction, msgs;
         try {
           transaction = await db.transaction();
@@ -63,6 +63,7 @@ class socketServer {
           socket.emit('lastChat', msgs, false);
         else
           socket.emit('lastChat', msgs, true);//查询最新的消息时，客户端发送的createDate属性为空
+        log.info(new Date());
       });
       //接收客户端发送的信息
       socket.on('sendMsg', async function (msg) {//发送信息
