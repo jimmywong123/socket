@@ -17,9 +17,9 @@ var db_setting = {
 
 if (process.env.NODE_ENV === 'production') {
     db_setting.database = 'socket'
-    db_setting.host = 'your.mysql.rds.aliyuncs.com'
-    db_setting.user = 'your'
-    db_setting.password = 'your'
+    db_setting.host = '127.0.0.1'
+    db_setting.user = 'root'
+    db_setting.password = 'admin'
 } else if (process.env.NODE_ENV === 'test') {
     // for test
     db_setting.database = 'socket'

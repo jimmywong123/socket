@@ -1,7 +1,7 @@
 "use strict"
 
 //import io from '../../jspm_packages/npm/socket.io-client@2.1.1/dist/socket.io'
-import dateUtil from '../util/dateUtil'
+import {format} from '../util/dateUtil'
 import io from 'socket.io-client'
 
 export function hichatfunction() {
@@ -34,7 +34,7 @@ HiChat.prototype = {
                         html += `
                             <div>${user.name}</div>
                             <img src='${user.img}' style='width:50px;height:50px'/>
-                            <div>${dateUtil.format(group.lastTime)}</div>
+                            <div>${format(group.lastTime)}</div>
                             <div>${group.lastContent}</div>
                             <div>${group.noRead}</div>`;
                     })
@@ -42,7 +42,7 @@ HiChat.prototype = {
                     html += `
                         <div>${group.name}</div>
                         <img src='${group.img}' style='width:50px;height:50px'/>
-                        <div>${dateUtil.format(group.lastTime)}</div>
+                        <div>${format(group.lastTime)}</div>
                         <div>${group.lastContent}</div>
                         <div>${group.noRead}</div>
                     `;
@@ -82,7 +82,7 @@ HiChat.prototype = {
                     html = `<li createDate='${msg.createDate}'>`;
                 html += `<img src='${msg.sender.img}' style='width:40px;height:40px'/>
                 <div>${msg.sender.name}</div>
-                <div>${dateUtil.format(msg.createDate)}</div>`;
+                <div>${format(msg.createDate)}</div>`;
                 if(msg.type==0)
                     html += `<div>${msg.content}</div>`;
                 else if(msg.type==1)
@@ -147,7 +147,7 @@ HiChat.prototype = {
                     html = `<li createDate='${msg.createDate}'>`;
                 html += `<img src='${msg.sender.img}' style='width:40px;height:40px'/>
                 <div>${msg.sender.name}</div>
-                <div>${dateUtil.format(msg.createDate)}</div>
+                <div>${format(msg.createDate)}</div>
                 <div>${msg.text}</div>`;
                 if(msg.type==0)
                     html+=`<div>${msg.content}</div>`;

@@ -1,6 +1,6 @@
-'format es6'
+//'format es6'
 // 格式化时间
-exports.format = (date) => {
+export function format (date){
     if (date == null)
         return null;
     date = new Date(date);
