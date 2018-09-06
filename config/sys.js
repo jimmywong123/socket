@@ -27,7 +27,7 @@ var config = {
 }
 
 if (process.env.NODE_ENV === 'production') {
-    config.host = 'http://localhost:3000'
+    config.host = 'http://120.79.243.235:3000'
 
     config.debug = false
 } else if (process.env.NODE_ENV === 'test') {
