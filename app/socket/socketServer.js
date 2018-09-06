@@ -20,7 +20,7 @@ class socketServer {
       //查看最近的联系人列表
       socket.on('queryLastContacts', async function (msg) {
         let ip = socket.request.headers.host;//socket.handshake.headers.origin
-        //console.log(socket.handshake);
+        console.log(socket);
         //存储该用户socket
         that.socketList[`${ip}-${msg.senderId}`] = socket;
         // cache.set(`${ip}-${msg.senderId}`,socket);
