@@ -29,6 +29,8 @@ block content
           each n in ['item.username','item.roleTypeTitle','item.lastAtFormat','item.createdAtFormat','item.updatedAtFormat']
             td #{ eval(n) }
           td 
+            a(href='http://120.79.243.235:3000/socket',target='view_window') Chat
+          td 
             a(href='/users/#{ item.id}') Show
           td 
             a(href='/users/#{ item.id}/edit') Edit

@@ -9,16 +9,25 @@ block content
     span Socket test
     //small.pull-right: a(href='/users/new') New User
   hr
-  #chatBody.form-inline
-    ul#userList.form-group(style='width:10%;height:500px;background-color:#fff;overflow:scroll;padding:5px;border:1px solid #C0C0C0;margin-left:25%')
-    .wrapper.form-group(style='margin-left:10px')
-      ul#chat(style='width:400px;height:400px;background-color:#fff;overflow:scroll;padding:10px;border:1px solid #C0C0C0')
-      .controls
-        .form-inline(style='margin-top:10px')
-          input#emoji.form-group.btn.btn-default(type='button',value='emoji')
-          input#sendImg.form-group.btn.btn-default(type='button',value='image',style='margin-left:1%')
-          input#img(type='file',value='img',style='display:none')
-          br
-          textarea#message.form-control(rows='3',placeHolder='enter to send',style='margin-top:10px;width:80%')
-          input#sendBtn.btn.btn-info(type='button',value='SEND',style='margin-left:5px')
-        #emojiWrapper
+  #chatBody.form-inline(style='width:80%;height:600px;margin-left:10%;border:4px solid #3399CC;border-radius:10px')
+    div.form-group(style='width:5%;height:100%;background-color:#3399CC')
+      ul.list-group.form-group(style='margin-top:50%;margin-right:10px')
+        li.list-group-item.active(style='width:100%')
+          i.glyphicon.glyphicon-comment(href='#chatDiv',data-toggle='tab',style='color:white')
+        li.list-group-item(style='width:100%')
+          i.glyphicon.glyphicon-user(href='#contactDiv',data-toggle='tab',style='')
+    div.tab-content.form-group(style='width:95%')
+      #chatDiv.tab-pane.fade.in.active(style='width:100%')
+        ul#userList.form-group(style='width:20%;height:590px;background-color:#fff;overflow:scroll;padding:5px')
+        .wrapper.form-group(style='width:79%;margin-left:1%')
+          ul#chat(style='width:95%;height:300px;background-color:#fff;overflow:scroll;padding:10px;border:1px solid #C0C0C0')
+          .controls
+            .form-inline(style='margin-top:10px')
+              input#emoji.form-group.btn.btn-default(type='button',value='emoji')
+              input#sendImg.form-group.btn.btn-default(type='button',value='image',style='margin-left:1%')
+              input#img(type='file',value='img',style='display:none')
+              br
+              textarea#message.form-control(rows='3',placeHolder='enter to send',style='margin-top:10px;width:80%')
+              input#sendBtn.btn.btn-info(type='button',value='SEND',style='margin-left:5px')
+            #emojiWrapper
+      #contactDiv.tab-pane.fade contact

@@ -25,7 +25,7 @@ HiChat.prototype = {
         //this.socket = io.connect('http://120.79.243.235:3000');
         this.socket = io.connect('http://localhost:3000');
         //查询最近的聊天群
-        this.socket.emit('queryLastContacts', { 'senderId': 1 });
+        this.socket.emit('queryLastContacts', { 'senderId': 1 ,'ip':window.location.search.split('ip=')[1].split('&')[0]});
         //监听客户端返回的最近的聊天群
         this.socket.on('lastContacts', function (groups, isNew) {
             $.each(groups, function (i, group) {
