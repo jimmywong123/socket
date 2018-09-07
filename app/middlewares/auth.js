@@ -14,6 +14,7 @@ function *gen_session(user, t) {
     var session = t.session
 
     session[Config.auth_cookie_name] = auth_token
+    session.cookie.domain = 'hiredchina.cn'
     session.user = user
 
     yield t.sessionStore.set(t.sessionId,session)
