@@ -31,3 +31,25 @@ exports.findByOriginalId = async function (originalId, transaction) {
         transaction: transaction
     })
 };
+
+/**
+ * 根据originalId查询用户是否存在，如果不存在会返回null
+ * @param {*} originalId 
+ * @param {*} transaction 
+ */
+exports.checkExist = async function (user, transaction) {
+    return socketUser.findOne({
+        attributes: ['id'],
+        where: { originalId: user.originalId, ip: user.ip },
+        transaction: transaction
+    })
+};
+
+/**
+ * 新增socketuser
+ * @param {*} user 
+ * @param {*} transaction 
+ */
+exports.create = async function (user, transaction) {
+    return socketUser.create(user, { transaction: transaction });
+};

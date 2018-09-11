@@ -27,8 +27,8 @@ app.use(convert($middlewares.views))//指定页面渲染层
 app.use(convert($middlewares.favicon))//网页图标
 app.use(convert($middlewares.cors))//支持跨域请求
 app.use(convert($middlewares.less))//css预处理
-app.use(convert($middlewares.auth.authUser))//用户操作，session存储，权限验证
-app.use(convert($middlewares.auth.blockUser))
+//app.use(convert($middlewares.auth.authUser))//用户操作，session存储，权限验证
+//app.use(convert($middlewares.auth.blockUser))
 
 
 app.use(convert($middlewares.log4js))//日志

@@ -13,13 +13,13 @@ var config = {
     session_secret: 'hired_base_secret', // 务必修改
     auth_cookie_name: 'hired_base',
 
-    port: 3000,
+    port: 3001,
 
 
     list_count : 20,
 
     //host: `http://base.test.hiredchina.cn`,
-    host: `http://localhost:3000`,
+    host: `http://localhost:3001`,
 
     appId: 'adjfpqwj13120ca9r10cj',
     appSecret: 'jgpjq311nniocha1234',

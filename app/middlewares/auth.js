@@ -8,16 +8,16 @@ const $models = require('mount-models')(__dirname)
 
 const User = $models.user
 
-function *gen_session(user, t) {
-    var auth_token = user.id + '$$$$' //以后可能会存储更多信息，用 $$$$ 来分嗝
+function *gen_session(data,t) {
+    //var auth_token = user.id + '$$$$' //以后可能会存储更多信息，用 $$$$ 来分嗝
 
-    var session = t.session
+    //var session = t.session
 
-    session[Config.auth_cookie_name] = auth_token
-    session.cookie.domain = 'hiredchina.cn'
-    session.user = user
+    //session[Config.auth_cookie_name] = auth_token
+    //session.cookie.domain = 'hiredchina.cn'
+    //session.user = user
 
-    yield t.sessionStore.set(t.sessionId,session)
+    yield t.sessionStore.set('123123',data)
 }
 
 exports.gen_session = gen_session

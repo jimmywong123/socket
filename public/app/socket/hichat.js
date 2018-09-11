@@ -1,7 +1,7 @@
 "use strict"
 
 //import io from '../../jspm_packages/npm/socket.io-client@2.1.1/dist/socket.io'
-import {format} from '../util/dateUtil'
+import { format } from '../util/dateUtil'
 import io from 'socket.io-client'
 
 export function hichatfunction() {
@@ -23,9 +23,9 @@ HiChat.prototype = {
         var that = this;
         //建立到服务器的socket连接
         //this.socket = io.connect('http://120.79.243.235:3000');
-        this.socket = io.connect('http://localhost:3000');
+        this.socket = io.connect('http://localhost:3001');
         //查询最近的聊天群
-        this.socket.emit('queryLastContacts', { 'senderId': 1 ,'ip':window.location.search.split('ip=')[1].split('&')[0]});
+        this.socket.emit('queryLastContacts', { 'token': window.location.search.split('token=')[1] });
         //监听客户端返回的最近的聊天群
         this.socket.on('lastContacts', function (groups, isNew) {
             $.each(groups, function (i, group) {
@@ -84,9 +84,9 @@ HiChat.prototype = {
                 html += `<img src='${msg.sender.img}' style='width:40px;height:40px'/>
                 <div>${msg.sender.name}</div>
                 <div>${format(msg.createDate)}</div>`;
-                if(msg.type==0)
+                if (msg.type == 0)
                     html += `<div>${msg.content}</div>`;
-                else if(msg.type==1)
+                else if (msg.type == 1)
                     html += `<img src='${msg.content}'>`;
                 html += "</li>";
                 $('#chat').prepend(html);//最新的消息显示在最下面
@@ -111,7 +111,7 @@ HiChat.prototype = {
                 scrollHeight += $(this).height();
             })
             if (scrollTop + windowHeight == scrollHeight)  //滚动到底部执行事件  
-                that.socket.emit('queryLastContacts', { 'senderId': 1, 'lastTime': $(this).children('li:last-child').attr('lastTime') });
+                that.socket.emit('queryLastContacts', { 'token': window.location.search.split('token=')[1],'lastTime': $(this).children('li:last-child').attr('lastTime') });
         });
         //监听聊天窗口上拉事件
         $('#chat').scroll(function () {
@@ -150,10 +150,10 @@ HiChat.prototype = {
                 <div>${msg.sender.name}</div>
                 <div>${format(msg.createDate)}</div>
                 <div>${msg.text}</div>`;
-                if(msg.type==0)
-                    html+=`<div>${msg.content}</div>`;
-                else if(msg.type==1)
-                    html+=`<img src='${msg.content}'></div>`;
+                if (msg.type == 0)
+                    html += `<div>${msg.content}</div>`;
+                else if (msg.type == 1)
+                    html += `<img src='${msg.content}'></div>`;
 
                 html += "</li>";
                 $('#chat').append(html);//最新的消息显示在最下面

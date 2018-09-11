@@ -6,9 +6,8 @@ mixin menu(menus)
             .collapse.navbar-collapse
                 ul.nav.navbar-nav
                     each menuLi in menus
-                        if(menuLi.roles.includes(current_user.roleType))
-                            li
-                                a(href='#{menuLi.href}') #{menuLi.name}
+                        li
+                            a(href='#{menuLi.href}') #{menuLi.name}
                 ul.nav.navbar-nav.navbar-right
                     li.dropdown
                         a.dropdown-toggle(href="#",class="dropdown-toggle",data-toggle="dropdown",role="button",aria-haspopup="true",aria-expanded="false") More

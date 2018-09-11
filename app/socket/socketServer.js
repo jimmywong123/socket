@@ -19,12 +19,11 @@ class socketServer {
     that.io.on('connection', (socket) => {
       //查看最近的联系人列表
       socket.on('queryLastContacts', async function (msg) {
-        //let ip = socket.request.headers.origin || socket.request.headers.referer.split('/socket')[0];//socket.handshake.headers.origin
-        let ip = msg.ip;
+        let sender = await cache.get(msg.token);
+        let ip = sender.ip;
+        msg.senderId = sender.originalId;
         //存储该用户socket
         that.socketList[`${ip}-${msg.senderId}`] = socket;
-        // cache.set(`${ip}-${msg.senderId}`,socket);
-        // cache.get(`${ip}-${msg.senderId}`);
 
         let transaction, groups;
         try {
@@ -66,8 +65,10 @@ class socketServer {
       });
       //接收客户端发送的信息
       socket.on('sendMsg', async function (msg) {//发送信息
+        let sender = await cache.get(msg.token);
         //完善msg，将msg存入数据库
-        msg.ip = socket.request.headers.host;
+        msg.ip = sender.ip;
+        msg.senderId = sender.originalId;
         msg.createDate = new Date();
 
         let transaction, receiverIds;
