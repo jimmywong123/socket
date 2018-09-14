@@ -1,6 +1,5 @@
 const redis = require('./redis')
 const log = require('./logger')(__filename.replace(__dirname, ''))
-const json = require('circular-json');
 
 let get = async function (key) {
     let start = new Date();
@@ -8,7 +7,7 @@ let get = async function (key) {
 
     if (!data)
         return null
-    data = json.parse(data);
+    data = JSON.parse(data);
 
     let duration = (new Date() - start);
     log.debug(`Cache get ${key} , ${duration} ms`);
@@ -18,7 +17,7 @@ let get = async function (key) {
 let set = async function (key, value, time) {
     let start = new Date();
 
-    value = json.stringify(value);
+    value = JSON.stringify(value);
 
     if (!time)
         await redis.set(key, value);

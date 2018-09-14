@@ -12,7 +12,8 @@ var db_setting = {
         idle: 10000
     },
     timestamps: false,
-    timezone: '+08:00'
+    timezone: '+08:00',
+    //logging:false
 }
 
 if (process.env.NODE_ENV === 'production') {

@@ -11,26 +11,27 @@ const Op = db.Op;
  * @param {*} groupId 群id
  * @param {*} transaction 事物
  */
-exports.findByGroupId = async function (groupId, transaction) {
+exports.findByGroupId = async function (msg, transaction) {
     return socketUser.findAll({
-        attributes: ['originalId'],
+        attributes: ['id'],
         include: [{
             model: group,
             attributes: ['id'],
             as: 'groupList',
-            where: { id: groupId },
+            where: { id: msg.groupId },
         }],
+        where: { id: { $ne: msg.senderId } },
         transaction: transaction
     })
 };
 
-exports.findByOriginalId = async function (originalId, transaction) {
-    return socketUser.findOne({
-        attributes: ['originalId', 'name', 'img'],
-        where: { originalId: originalId },
-        transaction: transaction
-    })
-};
+// exports.findByOriginalId = async function (originalId, transaction) {
+//     return socketUser.findOne({
+//         attributes: ['originalId', 'name', 'img'],
+//         where: { originalId: originalId },
+//         transaction: transaction
+//     })
+// };
 
 /**
  * 根据originalId查询用户是否存在，如果不存在会返回null
@@ -52,4 +53,16 @@ exports.checkExist = async function (user, transaction) {
  */
 exports.create = async function (user, transaction) {
     return socketUser.create(user, { transaction: transaction });
+};
+
+/**
+ * 更新用户状态为在线或离线
+ */
+exports.update = async function (updateUser, transaction) {
+    return socketUser.update({
+        status: updateUser.status
+    }, {
+            where: { id: updateUser.id },
+            transaction: transaction
+        });
 };

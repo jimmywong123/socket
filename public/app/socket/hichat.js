@@ -23,47 +23,53 @@ HiChat.prototype = {
         var that = this;
         //建立到服务器的socket连接
         //this.socket = io.connect('http://120.79.243.235:3000');
-        this.socket = io.connect('http://localhost:3001');
+        this.socket = io.connect('http://localhost:3001/hiredchina');
         //查询最近的聊天群
-        this.socket.emit('queryLastContacts', { 'token': window.location.search.split('token=')[1] });
+        this.socket.emit('queryLastContacts', { 'token': window.location.search.split('token=')[1] }, (...args) => lastContacts(...args));
         //监听客户端返回的最近的聊天群
-        this.socket.on('lastContacts', function (groups, isNew) {
+        function lastContacts(groups, senderId, isNew) {
             $.each(groups, function (i, group) {
-                let html = `<li class='group' groupId='${group.id}' lastTime='${group.lastTime}'>`;
+                let html = `<li class='group' groupId='${group.id}' lastTime='${group.lastTime}' isPrivate='${group.isPrivate}'>`;
                 if (group.isPrivate == true) {
                     $.each(group.userList, function (i, user) {
                         html += `
-                            <div>${user.name}</div>
-                            <img src='${user.img}' style='width:50px;height:50px'/>
-                            <div>${format(group.lastTime)}</div>
-                            <div>${group.lastContent}</div>
-                            <div>${group.noRead}</div>`;
+                            <div class='name' receiverId='${user.id}'>${user.name}</div>
+                            <img class='img' src='${user.img}' style='width:50px;height:50px'/>
+                            <div class='lastTime'>${format(group.lastTime)}</div>
+                            <div class='lastContent'>${group.lastContent}</div>
+                            <div class='noRead'>${group.noRead}</div>
+                            <div class='status'>${user.status}</div>`;
                     })
                 } else {
                     html += `
-                        <div>${group.name}</div>
-                        <img src='${group.img}' style='width:50px;height:50px'/>
-                        <div>${format(group.lastTime)}</div>
-                        <div>${group.lastContent}</div>
-                        <div>${group.noRead}</div>
+                        <div class='name'>${group.name}</div>
+                        <img class='img' src='${group.img}' style='width:50px;height:50px'/>
+                        <div class='lastTime'>${format(group.lastTime)}</div>
+                        <div class='lastContent'>${group.lastContent}</div>
+                        <div class='noRead'>${group.noRead}</div>
                     `;
                 }
                 html += "</li>";
                 $('#userList').append(html);
             })
-            if (isNew)
+            if (isNew) {
                 $('#userList').children('li:first-child').click();//打开联系人列表时默认选中第一个对话框
-        })
+                $('#sendBtn').attr('senderId', senderId);
+            }
+        }
         //点击头像时查询最近的聊天记录
         $(document).on("click", '.group', function () {
             $('#selectedChat').css('background-color', '');
             $('#selectedChat').removeAttr('id');
             $(this).css("background-color", "#E8E8E8");
             $(this).attr('id', 'selectedChat');
-            that.socket.emit('queryChat', { 'groupId': $(this).attr('groupId') });
+            that.socket.emit('queryChat', { 'groupId': $(this).attr('groupId'), 'noRead': $(this).children('.noRead').html() }, (...args) => lastChat(...args));
+            that.socket.emit('haveRead', { 'groupId': $(this).attr('groupId'), 'noRead': $(this).children('.noRead').html() }, () => {
+                $(this).children('.noRead').html(0);
+            });
         });
         //监听服务端返回的最近聊天信息
-        this.socket.on('lastChat', function (msgs, isNew) {
+        function lastChat(msgs, isNew) {
             let scrollTop;//记录滑动块的初始位置
             let startScrollHeight = 0;//记录聊天窗口的初始滑动高度
 
@@ -77,10 +83,10 @@ HiChat.prototype = {
             }
             $.each(msgs, function (i, msg) {
                 let html;
-                if (msg.sender.originalId == 1)
-                    html = `<li createDate='${msg.createDate}' style='text-align: right'>`;
+                if (msg.senderId == $('#sendBtn').attr('senderId'))
+                    html = `<li msgId='${msg.id}' createDate='${msg.createDate}' style='text-align: right'>`;
                 else
-                    html = `<li createDate='${msg.createDate}'>`;
+                    html = `<li msgId='${msg.id}' createDate='${msg.createDate}'>`;
                 html += `<img src='${msg.sender.img}' style='width:40px;height:40px'/>
                 <div>${msg.sender.name}</div>
                 <div>${format(msg.createDate)}</div>`;
@@ -100,8 +106,7 @@ HiChat.prototype = {
                 })
                 $('#chat').scrollTop(scrollTop + (endScrollHeight - startScrollHeight));
             }
-
-        })
+        }
         //监听用户列表下拉事件
         $('#userList').scroll(function () {
             let scrollTop = $(this).scrollTop();//滚动条位置
@@ -111,13 +116,15 @@ HiChat.prototype = {
                 scrollHeight += $(this).height();
             })
             if (scrollTop + windowHeight == scrollHeight)  //滚动到底部执行事件  
-                that.socket.emit('queryLastContacts', { 'token': window.location.search.split('token=')[1],'lastTime': $(this).children('li:last-child').attr('lastTime') });
+                that.socket.emit('queryLastContacts', { 'token': window.location.search.split('token=')[1], 'lastTime': $(this).children('li:last-child').attr('lastTime') },
+                    (...args) => lastContacts(...args));
         });
         //监听聊天窗口上拉事件
         $('#chat').scroll(function () {
             let scrollTop = $(this).scrollTop();//滚动条位置
             if (scrollTop == 0)  //滚动到头部执行事件  
-                that.socket.emit('queryChat', { 'groupId': $('#selectedChat').attr('groupId'), 'createDate': $(this).children('li:first-child').attr('createDate') });
+                that.socket.emit('queryChat', { 'groupId': $('#selectedChat').attr('groupId'), 'createDate': $(this).children('li:first-child').attr('createDate') },
+                    (...args) => lastChat(...args));
         });
         //发送消息
         $('#sendBtn').click(function () {
@@ -125,12 +132,14 @@ HiChat.prototype = {
                 alert("发送内容不能为空");
             } else {
                 //'ip':window.location.host,
-                that.socket.emit('sendMsg', { 'senderId': 1, 'userName': '1号用户', 'groupId': $('#selectedChat').attr('groupId'), 'content': $('#message').val(), type: 0 });
+                that.socket.emit('sendMsg', { 'token': window.location.search.split('token=')[1], 'groupId': $('#selectedChat').attr('groupId'), 'content': $('#message').val(), type: 0 },
+                    (...args) => showNewMsg(...args));
                 $('#message').val('');
             }
         })
         //接收消息
-        this.socket.on('newMsg', function (msg) {
+        this.socket.on('newMsg', (...args) => showNewMsg(...args))
+        function showNewMsg(msg, isCallBack) {
             //如果用户正停留在此聊天窗口最底端，有新消息时滚动条应滑动到最底端
             if ($('#selectedChat').attr('groupId') == msg.groupId) {
                 let scrollHeight = 0;
@@ -142,14 +151,13 @@ HiChat.prototype = {
                     isBottom = true;
 
                 let html;
-                if (msg.sender.originalId == 1)
+                if (isCallBack)
                     html = `<li createDate='${msg.createDate}' style='text-align: right'>`;
                 else
                     html = `<li createDate='${msg.createDate}'>`;
                 html += `<img src='${msg.sender.img}' style='width:40px;height:40px'/>
                 <div>${msg.sender.name}</div>
-                <div>${format(msg.createDate)}</div>
-                <div>${msg.text}</div>`;
+                <div>${format(msg.createDate)}</div>`;
                 if (msg.type == 0)
                     html += `<div>${msg.content}</div>`;
                 else if (msg.type == 1)
@@ -165,8 +173,35 @@ HiChat.prototype = {
                     })
                     $('#chat').scrollTop(scrollHeight);//滑动到最底端
                 }
+                $('#selectedChat').children('.lastTime').html(format(msg.createDate));
+                msg.type == 0 ? $('#selectedChat').children('.lastContent').html(msg.content) : $('#selectedChat').children('.lastContent').html(`[图片]`)
+                //向客户端发送已读回执
+                that.socket.emit('haveRead', { 'groupId': $('#selectedChat').attr('groupId'), 'noRead': 1 }, () => {
+                    $('#selectedChat').children('.noRead').html(0);
+                });
             } else {//如果用户没有停留在有新消息的窗口，此窗口应当显示未读的数量
-
+                //没有停留在当前窗口又分为两种情况，一种是新的对话窗口，一种是新的消息
+                let chatOrMsg = 'chat';
+                $('#userList').children().each(function () {
+                    if ($(this).attr('groupId') == msg.groupId) {//已有窗口的新消息
+                        $(this).children('.lastTime').html(format(msg.createDate));
+                        msg.type == 0 ? $(this).children('.lastContent').html(msg.content) : $(this).children('.lastContent').html(`[图片]`)
+                        $(this).children('.noRead').html(msg.noRead);
+                        chatOrMsg = 'msg';
+                        return;
+                    }
+                })
+                if (chatOrMsg == 'chat') {
+                    let chatHtml = `<div class='name' receiverId='${msg.sender.id}'>${msg.sender.name}</div>
+                    <img class='img' src='${msg.sender.img}' style='width:50px;height:50px'/>
+                    <div class='lastTime'>${format(msg.createDate)}</div>
+                    <div class='lastContent'>${msg.content}</div>
+                    <div class='noRead'>${msg.noRead}</div>
+                    <div class='status'>online</div>`;
+                    $('#userList').prepend(chatHtml);
+                    //如果是新的群聊，则msg应包含isprivate属性，并包含群信息。。。
+                    
+                }
             }
             //有新消息的聊天群应浮动到最上方
             $('#userList').children().each(function () {
@@ -178,7 +213,7 @@ HiChat.prototype = {
                     return;
                 }
             })
-        })
+        }
         //点击图片按钮，选择图片后进行发送
         $('#sendImg').click(function () {
             $('#img').click();
@@ -196,7 +231,7 @@ HiChat.prototype = {
                     success: function (data) {
                         //上传到七牛后，将链接发给socket
                         console.log(data);
-                        that.socket.emit('sendMsg', { 'senderId': 1, 'userName': '1号用户', 'groupId': $('#selectedChat').attr('groupId'), 'content': data.result, type: 1 });
+                        that.socket.emit('sendMsg', { 'token': window.location.search.split('token=')[1], 'groupId': $('#selectedChat').attr('groupId'), 'content': data.result, type: 1 }, (...args) => showNewMsg(...args));
                     },
                     error: function () {
                         alert("上传失败！");
@@ -210,6 +245,38 @@ HiChat.prototype = {
                 // }
             }
         })
+        this.socket.on('changeStatus', (sender) => {
+            $('.group').each(function () {
+                if ($(this).attr('isPrivate') == 'true') {
+                    if ($(this).children(':first').attr('receiverId') == sender.id) {
+                        $(this).children('.status').html(sender.status);
+                        return;
+                    }
+                }
+            })
+        })
+        // $(window).unload(function(){
+        //     //响应事件
+        //     alert("获取到了页面要关闭的事件了！"); 
+        // }); 
+        // window.onbeforeunload = function(){
+
+        //     var  n  =  window.event.screenX  -  window.screenLeft; 
+
+        //     var  b  =  n  >  document.documentElement.scrollWidth-20; 
+
+        //     if(b  &&  window.event.clientY  <  0  ||  window.event.altKey) 
+
+        //     {  //页面关闭
+        //         alert(123);
+
+        //     }else{
+
+        //         页面刷新   
+
+        //   } 
+
+        //}
         // $.ajax({
         //     type: "post",
         //     url: "/socket/sendMsg",

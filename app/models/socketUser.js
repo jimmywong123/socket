@@ -9,6 +9,7 @@ module.exports = db.define('socket_user', {
     originalId: {type: Sequelize.INTEGER(11),field: 'original_id',comment:'用户所在平台的原始id'},
     name: {type: Sequelize.STRING(80),comment:'用户名'},
     img: {type: Sequelize.STRING(1000),comment:'用户头像'},
+    status: {type: Sequelize.INTEGER(1),comment:'在线状态：0离线，1在线'},
   }, {
     freezeTableName: true, // Model 对应的表名将与model名相同
     timestamps:false,

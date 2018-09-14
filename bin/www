@@ -34,7 +34,7 @@ server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
 
-new socketServer(server).ioListen();//此行需在server.listen(port)之后运行，否则会监听不到
+new socketServer(server);//此行需在server.listen(port)之后运行，否则会监听不到
 // let socketList = socketSer.socketList;
 // exports.socketList = socketList;
 

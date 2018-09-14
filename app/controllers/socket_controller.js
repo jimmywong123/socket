@@ -64,11 +64,10 @@ exports.api = {
             this.body = apiFormat.api_error(data)
         } else {
             var new_token = jwt.sign({ username: username, password: password }, Config.session_secret, {
-                expiresIn: 60 * 60 * 6 // 设置过期时间6小时
+                expiresIn: 60 * 10 // 设置过期时间10分钟
             })
             data.success = true;
             data.token = new_token;
-
             let transaction, tempSender, tempReceiver;
             try {
                 transaction = await db.transaction();
@@ -78,17 +77,19 @@ exports.api = {
                     sender = await socketUserService.create(sender, transaction);
                 else
                     sender.id = tempSender.id;
-                tempReceiver = await socketUserService.checkExist(receiver, transaction);
-                if (tempReceiver == null)
-                    receiver = await socketUserService.create(receiver, transaction);
-                else
-                    receiver.id = tempReceiver.id;
-                //在数据库查询这两个用户之前有没有建过私聊群，如果没有则新建私聊群
-                if (!await groupService.checkExist(sender, receiver, transaction)) {
-                    group.managerId = sender.id;
-                    group.isPrivate = 1;
-                    group.lastTime = new Date();
-                    await groupService.create(group, sender, receiver, transaction);
+                if (receiver.originalId) {
+                    tempReceiver = await socketUserService.checkExist(receiver, transaction);
+                    if (tempReceiver == null)
+                        receiver = await socketUserService.create(receiver, transaction);
+                    else
+                        receiver.id = tempReceiver.id;
+                    //在数据库查询这两个用户之前有没有建过私聊群，如果没有则新建私聊群
+                    if (!await groupService.checkExist(sender, receiver, transaction)) {
+                        group.managerId = sender.id;
+                        group.isPrivate = 1;
+                        group.lastTime = new Date();
+                        await groupService.create(group, sender, receiver, transaction);
+                    }
                 }
                 transaction.commit();
             } catch (error) {
@@ -97,6 +98,7 @@ exports.api = {
             }
 
             cache.set(new_token, sender, 60 * 60 * 12);
+            cache.set(parameter.ioCookie, sender, 60 * 60 * 24);
             this.body = apiFormat.api(data)
         }
     }
