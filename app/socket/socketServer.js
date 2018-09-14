@@ -124,15 +124,18 @@ function ioListen(io) {
     //监听用户离线事件
     socket.on('disconnect', async (reason) => {
       log.info(`disconnect======${socket.id}======${reason}`)
-      let sender = await cache.get(socket.handshake.headers.cookie.split('io=')[1].split(';')[0]);
-      if (sender != null) {
-        //查询该用户是否还有socket连接
-        io.in(`${sender.ip}-${sender.id}`).clients((error, clients) => {
-          clients.length > 0 ? sender.status = 'online' : sender.status = 'offline'
-          //通知所有人下线
-          if (sender.status == 'offline')
-            socket.broadcast.emit('changeStatus', sender);
-        });
+      try {
+        let sender = await cache.get(socket.handshake.headers.cookie.split('io=')[1].split(';')[0]);
+        if (sender != null) {
+          //查询该用户是否还有socket连接
+          io.in(`${sender.ip}-${sender.id}`).clients((error, clients) => {
+            clients.length > 0 ? sender.status = 'online' : sender.status = 'offline'
+            //通知所有人下线
+            if (sender.status == 'offline')
+              socket.broadcast.emit('changeStatus', sender);
+          });
+        }
+      } catch (error) {
       }
     });
 

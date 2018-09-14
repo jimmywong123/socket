@@ -23,7 +23,7 @@ HiChat.prototype = {
         var that = this;
         //建立到服务器的socket连接
         //this.socket = io.connect('http://120.79.243.235:3000');
-        this.socket = io.connect('http://localhost:3001/hiredchina');
+        this.socket = io.connect('http://120.79.243.235:3001/hiredchina');
         //查询最近的聊天群
         this.socket.emit('queryLastContacts', { 'token': window.location.search.split('token=')[1] }, (...args) => lastContacts(...args));
         //监听客户端返回的最近的聊天群
@@ -200,7 +200,7 @@ HiChat.prototype = {
                     <div class='status'>online</div>`;
                     $('#userList').prepend(chatHtml);
                     //如果是新的群聊，则msg应包含isprivate属性，并包含群信息。。。
-                    
+
                 }
             }
             //有新消息的聊天群应浮动到最上方
