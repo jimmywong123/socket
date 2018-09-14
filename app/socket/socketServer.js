@@ -21,7 +21,13 @@ function ioListen(io) {
     socket.on('queryLastContacts', async function (msg, callBack) {
       log.info(`queryLastContacts======${socket.id}`)
 
-      let sender = await cache.get(socket.handshake.headers.cookie.split('io=')[1].split(';')[0]) || await cache.get(socket.handshake.headers.referer.split('token=')[1]);
+      let sender;
+      try { 
+        sender = await cache.get(socket.handshake.headers.referer.split('token=')[1]) 
+      } catch (error) {
+        sender = cache.get(socket.handshake.headers.cookie.split('io=')[1].split(';')[0]);
+      }
+
       msg.senderId = sender.id;
       msg.ip = sender.ip;
       sender.status = 'online';//在线
@@ -87,7 +93,13 @@ function ioListen(io) {
     socket.on('sendMsg', async function (msg, callBack) {//发送信息
       log.info(`sendMsg======${socket.id}`)
 
-      let sender = await cache.get(socket.handshake.headers.cookie.split('io=')[1].split(';')[0]) || await cache.get(socket.handshake.headers.referer.split('token=')[1]);
+      let sender;
+      try { 
+        sender = await cache.get(socket.handshake.headers.referer.split('token=')[1]) 
+      } catch (error) {
+        sender = cache.get(socket.handshake.headers.cookie.split('io=')[1].split(';')[0]);
+      }
+
       //完善msg，将msg存入数据库
       msg.ip = sender.ip;
       msg.senderId = sender.id;
@@ -143,7 +155,12 @@ function ioListen(io) {
     socket.on('queryNoRead', async (msg, callBack) => {
       log.info(`queryNoRead======${socket.id}`)
 
-      let sender = await cache.get(socket.handshake.headers.cookie.split('io=')[1].split(';')[0]) || await cache.get(socket.handshake.headers.referer.split('token=')[1]);
+      let sender;
+      try { 
+        sender = await cache.get(socket.handshake.headers.referer.split('token=')[1]) 
+      } catch (error) {
+        sender = cache.get(socket.handshake.headers.cookie.split('io=')[1].split(';')[0]);
+      }
       sender.status = 'online';
       socket.join(`${sender.ip}-${sender.id}`)
       //通知所有人上线
@@ -164,7 +181,12 @@ function ioListen(io) {
     //监听用户已读事件
     socket.on('haveRead', async (msg, callBack) => {
       log.info(`haveRead======${socket.id}`)
-      let sender = await cache.get(socket.handshake.headers.cookie.split('io=')[1].split(';')[0]) || await cache.get(socket.handshake.headers.referer.split('token=')[1]);
+      let sender;
+      try { 
+        sender = await cache.get(socket.handshake.headers.referer.split('token=')[1]) 
+      } catch (error) {
+        sender = cache.get(socket.handshake.headers.cookie.split('io=')[1].split(';')[0]);
+      }
       let transaction;
       try {
         transaction = await db.transaction();
