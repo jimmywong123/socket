@@ -68,37 +68,41 @@ exports.api = {
             })
             data.success = true;
             data.token = new_token;
-            let transaction, tempSender, tempReceiver;
-            try {
-                transaction = await db.transaction();
-                //在数据库查询有没有这两个用户的信息，如果没有则新建用户
-                tempSender = await socketUserService.checkExist(sender, transaction);
-                if (tempSender == null)
-                    sender = await socketUserService.create(sender, transaction);
-                else
-                    sender.id = tempSender.id;
-                if (receiver.originalId) {
-                    tempReceiver = await socketUserService.checkExist(receiver, transaction);
-                    if (tempReceiver == null)
-                        receiver = await socketUserService.create(receiver, transaction);
+
+            if (sender.originalId != receiver.originalId) {
+                let transaction, tempSender, tempReceiver;
+                try {
+                    transaction = await db.transaction();
+                    //在数据库查询有没有这两个用户的信息，如果没有则新建用户
+                    tempSender = await socketUserService.checkExist(sender, transaction);
+                    if (tempSender == null)
+                        sender = await socketUserService.create(sender, transaction);
                     else
-                        receiver.id = tempReceiver.id;
-                    //在数据库查询这两个用户之前有没有建过私聊群，如果没有则新建私聊群
-                    if (!await groupService.checkExist(sender, receiver, transaction)) {
-                        group.managerId = sender.id;
-                        group.isPrivate = 1;
-                        group.lastTime = new Date();
-                        await groupService.create(group, sender, receiver, transaction);
+                        sender.id = tempSender.id;
+                    if (receiver.originalId) {
+                        tempReceiver = await socketUserService.checkExist(receiver, transaction);
+                        if (tempReceiver == null)
+                            receiver = await socketUserService.create(receiver, transaction);
+                        else
+                            receiver.id = tempReceiver.id;
+                        //在数据库查询这两个用户之前有没有建过私聊群，如果没有则新建私聊群
+                        if (!await groupService.checkExist(sender, receiver, transaction)) {
+                            group.managerId = sender.id;
+                            group.isPrivate = 1;
+                            group.lastTime = new Date();
+                            await groupService.create(group, sender, receiver, transaction);
+                        }
                     }
+                    transaction.commit();
+                } catch (error) {
+                    transaction.rollback();
+                    logger.info(error);
                 }
-                transaction.commit();
-            } catch (error) {
-                transaction.rollback();
-                logger.info(error);
             }
 
             cache.set(new_token, sender, 60 * 60 * 12);
-            cache.set(parameter.ioCookie, sender, 60 * 60 * 24);
+            if (parameter.ioCookie)
+                cache.set(parameter.ioCookie, sender, 60 * 60 * 24);
             this.body = apiFormat.api(data)
         }
     }

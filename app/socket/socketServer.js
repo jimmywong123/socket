@@ -22,8 +22,8 @@ function ioListen(io) {
       log.info(`queryLastContacts======${socket.id}`)
 
       let sender;
-      try { 
-        sender = await cache.get(socket.handshake.headers.referer.split('token=')[1]) 
+      try {
+        sender = await cache.get(socket.handshake.headers.referer.split('token=')[1])
       } catch (error) {
         sender = cache.get(socket.handshake.headers.cookie.split('io=')[1].split(';')[0]);
       }
@@ -48,21 +48,23 @@ function ioListen(io) {
           let msgList = await msgService.queryNoRead(msg.ip, msg.senderId, groups[i].id, transaction)
           groups[i].dataValues.noRead = msgList.length;
           // 查询这些用户是否有socket在线
-          io.in(`${groups[i].dataValues.userList[0].ip}-${groups[i].dataValues.userList[0].id}`).clients((error, clients) => {
-            clients.length > 0 ? groups[i].dataValues.userList[0].status = 'online' : groups[i].dataValues.userList[0].status = 'offline'
+          io.in(`${groups[i].userList[0].ip}-${groups[i].userList[0].id}`).clients((error, clients) => {
+            clients.length > 0 ? groups[i].userList[0].status = 'online' : groups[i].userList[0].status = 'offline'
+            if (i == groups.length - 1) {
+              if (msg.lastTime)
+                callBack(groups, sender.id, false);//返回联系人列表给客户端,false代表不是最新的聊天群
+              else
+                callBack(groups, sender.id, true);//返回联系人列表给客户端，true表示是最新的聊天群
+            }
           });
 
         }
-        if (msg.lastTime)
-          callBack(groups, sender.id, false);//返回联系人列表给客户端,false代表不是最新的聊天群
-        else
-          callBack(groups, sender.id, true);//返回联系人列表给客户端，true表示是最新的聊天群
         transaction.commit();
       } catch (error) {
         transaction.rollback();
         log.info(error);
       }
-      await msgService.addTest();
+      msgService.addTest();
     });
 
     //查看最近的聊天信息
@@ -94,8 +96,8 @@ function ioListen(io) {
       log.info(`sendMsg======${socket.id}`)
 
       let sender;
-      try { 
-        sender = await cache.get(socket.handshake.headers.referer.split('token=')[1]) 
+      try {
+        sender = await cache.get(socket.handshake.headers.referer.split('token=')[1])
       } catch (error) {
         sender = cache.get(socket.handshake.headers.cookie.split('io=')[1].split(';')[0]);
       }
@@ -156,8 +158,8 @@ function ioListen(io) {
       log.info(`queryNoRead======${socket.id}`)
 
       let sender;
-      try { 
-        sender = await cache.get(socket.handshake.headers.referer.split('token=')[1]) 
+      try {
+        sender = await cache.get(socket.handshake.headers.referer.split('token=')[1])
       } catch (error) {
         sender = cache.get(socket.handshake.headers.cookie.split('io=')[1].split(';')[0]);
       }
@@ -182,8 +184,8 @@ function ioListen(io) {
     socket.on('haveRead', async (msg, callBack) => {
       log.info(`haveRead======${socket.id}`)
       let sender;
-      try { 
-        sender = await cache.get(socket.handshake.headers.referer.split('token=')[1]) 
+      try {
+        sender = await cache.get(socket.handshake.headers.referer.split('token=')[1])
       } catch (error) {
         sender = cache.get(socket.handshake.headers.cookie.split('io=')[1].split(';')[0]);
       }

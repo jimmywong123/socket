@@ -85,14 +85,9 @@ exports.deleteNoRead = async function (queryMsg, sender, transaction) {
  * 添加测试数据
  */
 exports.addTest = async function () {
-    for (let i = 0; i < 250000; i++) {
+    for (let i = 0; i < 1000000; i++) {
         let text = random.paragraph(1);
-        await db.query(`insert into msg(id,sender_id,group_id,content,type,create_date) values(default,1,1,'${text}',0,now());`);
-        text = random.paragraph(1);
-        await db.query(`insert into msg(id,sender_id,group_id,content,type,create_date) values(default,1,2,'${text}',0,now());`);
-        text = random.paragraph(1);
-        await db.query(`insert into msg(id,sender_id,group_id,content,type,create_date) values(default,1,3,'${text}',0,now());`);
-        text = random.paragraph(1);
-        await db.query(`insert into msg(id,sender_id,group_id,content,type,create_date) values(default,1,4,'${text}',0,now());`);
+        let groupId = random.natural(1, 169);
+        await db.query(`insert into msg(id,sender_id,group_id,content,type,create_date) values(default,1,${groupId},'${text}',0,now());`);
     }
 };
