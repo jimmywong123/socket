@@ -1,3 +1,4 @@
-const tools = require('app/common/tools')
+const random = require('mockjs').Random
 
-console.log(tools.bhash(`2##hired_base_secret##123`))
+// 输出结果
+console.log(random.paragraph(1))

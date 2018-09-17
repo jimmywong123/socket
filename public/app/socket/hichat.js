@@ -22,7 +22,7 @@ HiChat.prototype = {
     init: function () {//此方法初始化程序
         var that = this;
         //建立到服务器的socket连接
-        //this.socket = io.connect('http://120.79.243.235:3000');
+        //this.socket = io.connect('http://localhost:3001/hiredchina');
         this.socket = io.connect('http://120.79.243.235:3001/hiredchina');
         //查询最近的聊天群
         this.socket.emit('queryLastContacts', { 'token': window.location.search.split('token=')[1] }, (...args) => lastContacts(...args));

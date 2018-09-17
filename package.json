@@ -60,6 +60,7 @@
     "koa-views": "^4.1.0",
     "kp": "^1.1.0",
     "lodash": "^4.14.1",
+    "mockjs": "^1.0.1-beta3",
     "mount-controllers": "^1.0.8",
     "mount-middlewares": "^1.0.7",
     "mount-models": "^1.0.8",

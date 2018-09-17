@@ -5,6 +5,9 @@ const socketUser = $models.socketUser;
 const msg = $models.msg;
 const tools = require('../common/tools');
 const Op = db.Op;
+const random = require('mockjs').Random
+
+
 /**
  * 查询该用户在此群的未读信息的id
  * @param {*} ip 发送者ip地址
@@ -82,7 +85,8 @@ exports.deleteNoRead = async function (queryMsg, sender, transaction) {
  * 添加测试数据
  */
 exports.addTest = async function () {
-    for (let i = 0; i < 100000; i++) {
-        await db.query(`insert into msg(id,sender_id,group_id,content,type,create_date) values(default,1,1,'测试数据',0,now());`);
+    for (let i = 0; i < 1000000; i++) {
+        let text = random.paragraph(1);
+        await db.query(`insert into msg(id,sender_id,group_id,content,type,create_date) values(default,1,1,'${text}',0,now());`);
     }
 };
