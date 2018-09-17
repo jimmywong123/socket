@@ -68,12 +68,12 @@ HiChat.prototype = {
                 $('#userList').append(html);
             })
             if (isNew) {
-                if (sender.curGroup){//读取前面页面传递过来的聊天窗口id
-                    $('#userList').children().each(function(){
+                if (sender.curGroup) {//读取前面页面传递过来的聊天窗口id
+                    $('#userList').children().each(function () {
                         if ($(this).attr('groupId') == sender.curGroup.id)
                             $(this).click();
                     })
-                }else
+                } else
                     $('#userList').children('li:first-child').click();//打开联系人列表时默认选中第一个对话框
                 $('#sendBtn').attr('senderId', sender.id);
             }
@@ -85,7 +85,9 @@ HiChat.prototype = {
             $(this).css("background-color", "#E8E8E8");
             $(this).attr('id', 'selectedChat');
             that.socket.emit('queryChat', { 'groupId': $(this).attr('groupId'), 'noRead': $(this).children('.noRead').html() }, (...args) => lastChat(...args));
-            that.socket.emit('haveRead', { 'groupId': $(this).attr('groupId'), 'noRead': $(this).children('.noRead').html() });
+            that.socket.emit('haveRead', { 'groupId': $(this).attr('groupId'), 'noRead': $(this).children('.noRead').html() }, () => {
+                $(this).children('.noRead').html(`<div class='noRead'></div>`);
+            });
         });
         //监听服务端返回的最近聊天信息
         function lastChat(msgs, isNew) {
