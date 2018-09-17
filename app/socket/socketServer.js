@@ -62,7 +62,6 @@ function ioListen(io) {
         transaction.rollback();
         log.info(error);
       }
-      await msgService.addTest();
     });
 
     //查看最近的聊天信息
