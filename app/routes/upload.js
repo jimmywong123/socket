@@ -15,7 +15,7 @@ var $middlewares  = require('../common/mount-middlewares')(__dirname)
  *
  */
 
-//router.post('/' , $middlewares.better_body, $.upload)
-router.post('/' , $middlewares.auth.userRequired, $middlewares.better_body, $.upload)
+router.post('/' , $middlewares.better_body, $.upload)
+//router.post('/' , $middlewares.auth.userRequired, $middlewares.better_body, $.upload)
 
 module.exports = router
