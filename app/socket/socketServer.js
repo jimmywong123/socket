@@ -25,7 +25,7 @@ function ioListen(io) {
       try {
         sender = await cache.get(socket.handshake.headers.referer.split('token=')[1])
       } catch (error) {
-        sender = cache.get(socket.handshake.headers.cookie.split('io=')[1].split(';')[0]);
+        sender = await cache.get(socket.handshake.headers.cookie.split('io=')[1].split(';')[0]);
       }
 
       msg.senderId = sender.id;
@@ -52,9 +52,9 @@ function ioListen(io) {
             clients.length > 0 ? groups[i].userList[0].status = 'online' : groups[i].userList[0].status = 'offline'
             if (i == groups.length - 1) {
               if (msg.lastTime)
-                callBack(groups, sender.id, false);//返回联系人列表给客户端,false代表不是最新的聊天群
+                callBack(groups, sender, false);//返回联系人列表给客户端,false代表不是最新的聊天群
               else
-                callBack(groups, sender.id, true);//返回联系人列表给客户端，true表示是最新的聊天群
+                callBack(groups, sender, true);//返回联系人列表给客户端，true表示是最新的聊天群
             }
           });
 
@@ -64,7 +64,7 @@ function ioListen(io) {
         transaction.rollback();
         log.info(error);
       }
-      msgService.addTest();
+      //msgService.addTest();
     });
 
     //查看最近的聊天信息
@@ -99,7 +99,7 @@ function ioListen(io) {
       try {
         sender = await cache.get(socket.handshake.headers.referer.split('token=')[1])
       } catch (error) {
-        sender = cache.get(socket.handshake.headers.cookie.split('io=')[1].split(';')[0]);
+        sender = await cache.get(socket.handshake.headers.cookie.split('io=')[1].split(';')[0]);
       }
 
       //完善msg，将msg存入数据库
@@ -118,6 +118,7 @@ function ioListen(io) {
         group.lastContent = msg.content;
         group.lastName = sender.userName;
         group.lastTime = msg.createDate;
+        group.type = msg.type;
         await groupService.update(group, transaction);
         //获取此群下接收者的用户id
         receiverIds = await socketUserService.findByGroupId(msg, transaction);
@@ -161,7 +162,7 @@ function ioListen(io) {
       try {
         sender = await cache.get(socket.handshake.headers.referer.split('token=')[1])
       } catch (error) {
-        sender = cache.get(socket.handshake.headers.cookie.split('io=')[1].split(';')[0]);
+        sender = await cache.get(socket.handshake.headers.cookie.split('io=')[1].split(';')[0]);
       }
       sender.status = 'online';
       socket.join(`${sender.ip}-${sender.id}`)
@@ -182,22 +183,25 @@ function ioListen(io) {
 
     //监听用户已读事件
     socket.on('haveRead', async (msg, callBack) => {
-      log.info(`haveRead======${socket.id}`)
-      let sender;
-      try {
-        sender = await cache.get(socket.handshake.headers.referer.split('token=')[1])
-      } catch (error) {
-        sender = cache.get(socket.handshake.headers.cookie.split('io=')[1].split(';')[0]);
-      }
-      let transaction;
-      try {
-        transaction = await db.transaction();
-        await msgService.deleteNoRead(msg, sender, transaction);
-        callBack();
-        transaction.commit();
-      } catch (error) {
-        transaction.rollback();
-        log.info(error);
+      log.info(`haveRead======${socket.id}`);
+
+      if (msg.noRead) {
+        let sender;
+        try {
+          sender = await cache.get(socket.handshake.headers.referer.split('token=')[1])
+        } catch (error) {
+          sender = await cache.get(socket.handshake.headers.cookie.split('io=')[1].split(';')[0]);
+        }
+        let transaction;
+        try {
+          transaction = await db.transaction();
+          await msgService.deleteNoRead(msg, sender, transaction);
+          callBack == undefined ? null : callBack();
+          transaction.commit();
+        } catch (error) {
+          transaction.rollback();
+          log.info(error);
+        }
       }
     });
   })

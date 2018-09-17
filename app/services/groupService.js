@@ -55,6 +55,7 @@ exports.update = async function (updateGroup, transaction) {
         lastContent: updateGroup.lastContent,
         lastName: updateGroup.lastName,
         lastTime: updateGroup.lastTime,
+        type: updateGroup.type
     }, {
             where: { id: updateGroup.id },
             transaction: transaction
@@ -62,21 +63,18 @@ exports.update = async function (updateGroup, transaction) {
 };
 
 /**
- * 根据两个用户originalId查询之前是否有建过私聊群，没建过则返回false
+ * 根据两个用户originalId查询之前是否有建过私聊群
  * @param {*} senderId 
  * @param {*} receiverId 
  * @param {*} transaction 
  */
-exports.checkExist = async function (sender, receiver, transaction) {
+exports.findBySenderAndReceiver = async function (sender, receiver, transaction) {
     let sql = `select gu.group_id as id from socket_user su left join group_user gu on su.id = gu.user_id 
     where su.original_id = ${receiver.originalId} and gu.group_id in
     (select gu.group_id from socket_user su left join group_user gu on su.id = gu.user_id
     left join \`group\` g on g.id = gu.group_id where g.is_private = 1 and su.original_id = ${sender.originalId}
     and su.ip = '${sender.ip}')`;
-    let result = await db.query(sql, { model: group, transaction: transaction });
-    if (result.length == 0)
-        return false;
-    return true;
+    return await db.query(sql, { model: group, transaction: transaction });
 };
 
 exports.create = async function (createGroup, sender, receiver, transaction) {

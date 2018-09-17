@@ -27,7 +27,7 @@ HiChat.prototype = {
         //查询最近的聊天群
         this.socket.emit('queryLastContacts', { 'token': window.location.search.split('token=')[1] }, (...args) => lastContacts(...args));
         //监听客户端返回的最近的聊天群
-        function lastContacts(groups, senderId, isNew) {
+        function lastContacts(groups, sender, isNew) {
             $.each(groups, function (i, group) {
                 let html = `<li class='group' groupId='${group.id}' lastTime='${group.lastTime}' isPrivate='${group.isPrivate}'>`;
                 if (group.isPrivate == true) {
@@ -35,26 +35,47 @@ HiChat.prototype = {
                         html += `
                             <div class='name' receiverId='${user.id}'>${user.name}</div>
                             <img class='img' src='${user.img}' style='width:50px;height:50px'/>
-                            <div class='lastTime'>${format(group.lastTime)}</div>
-                            <div class='lastContent'>${group.lastContent}</div>
-                            <div class='noRead'>${group.noRead}</div>
-                            <div class='status'>${user.status}</div>`;
+                            <div class='lastTime'>${format(group.lastTime)}</div>`;
+                        if (group.type == 0)
+                            html += `<div class='lastContent'> ${group.lastContent}</div>`;
+                        else if (group.type == 1)
+                            html += `[图片]`;
+                        else
+                            html += `<div class='lastContent'></div>`;
+                        if (group.noRead > 0)
+                            html += `<div class='noRead'>${group.noRead}</div>`;
+                        else
+                            html += `<div class='noRead'></div>`;
+                        html += `<div class='status'>${user.status}</div>`;
                     })
                 } else {
                     html += `
                         <div class='name'>${group.name}</div>
                         <img class='img' src='${group.img}' style='width:50px;height:50px'/>
-                        <div class='lastTime'>${format(group.lastTime)}</div>
-                        <div class='lastContent'>${group.lastContent}</div>
-                        <div class='noRead'>${group.noRead}</div>
-                    `;
+                        <div class='lastTime'>${format(group.lastTime)}</div>`;
+                    if (msg.type == 0)
+                        html += `<div class='lastContent'>${group.lastContent}</div>`;
+                    else if (msg.type == 1)
+                        html += `[图片]`;
+                    else
+                        html += `<div class='lastContent'></div>`;
+                    if (group.noRead > 0)
+                        html += `<div class='noRead'>${group.noRead}</div>`;
+                    else
+                        html += `<div class='noRead'></div>`;
                 }
                 html += "</li>";
                 $('#userList').append(html);
             })
             if (isNew) {
-                $('#userList').children('li:first-child').click();//打开联系人列表时默认选中第一个对话框
-                $('#sendBtn').attr('senderId', senderId);
+                if (sender.curGroup){//读取前面页面传递过来的聊天窗口id
+                    $('#userList').children().each(function(){
+                        if ($(this).attr('groupId') == sender.curGroup.id)
+                            $(this).click();
+                    })
+                }else
+                    $('#userList').children('li:first-child').click();//打开联系人列表时默认选中第一个对话框
+                $('#sendBtn').attr('senderId', sender.id);
             }
         }
         //点击头像时查询最近的聊天记录
@@ -64,9 +85,7 @@ HiChat.prototype = {
             $(this).css("background-color", "#E8E8E8");
             $(this).attr('id', 'selectedChat');
             that.socket.emit('queryChat', { 'groupId': $(this).attr('groupId'), 'noRead': $(this).children('.noRead').html() }, (...args) => lastChat(...args));
-            that.socket.emit('haveRead', { 'groupId': $(this).attr('groupId'), 'noRead': $(this).children('.noRead').html() }, () => {
-                $(this).children('.noRead').html(0);
-            });
+            that.socket.emit('haveRead', { 'groupId': $(this).attr('groupId'), 'noRead': $(this).children('.noRead').html() });
         });
         //监听服务端返回的最近聊天信息
         function lastChat(msgs, isNew) {
@@ -176,9 +195,7 @@ HiChat.prototype = {
                 $('#selectedChat').children('.lastTime').html(format(msg.createDate));
                 msg.type == 0 ? $('#selectedChat').children('.lastContent').html(msg.content) : $('#selectedChat').children('.lastContent').html(`[图片]`)
                 //向客户端发送已读回执
-                that.socket.emit('haveRead', { 'groupId': $('#selectedChat').attr('groupId'), 'noRead': 1 }, () => {
-                    $('#selectedChat').children('.noRead').html(0);
-                });
+                that.socket.emit('haveRead', { 'groupId': $('#selectedChat').attr('groupId'), 'noRead': 1 });
             } else {//如果用户没有停留在有新消息的窗口，此窗口应当显示未读的数量
                 //没有停留在当前窗口又分为两种情况，一种是新的对话窗口，一种是新的消息
                 let chatOrMsg = 'chat';
@@ -220,7 +237,7 @@ HiChat.prototype = {
         })
         $('#img').on('change', function () {
             if ($('#img').val() != '') {
-                var formData = new FormData();
+                let formData = new FormData();
                 formData.append("files", $('#img').get(0).files[0]);
                 $.ajax({
                     url: "upload",
@@ -230,19 +247,13 @@ HiChat.prototype = {
                     processData: false,//必须false才会避开jQuery对 formdata 的默认处理，XMLHttpRequest会对 formdata 进行正确的处理
                     success: function (data) {
                         //上传到七牛后，将链接发给socket
-                        console.log(data);
                         that.socket.emit('sendMsg', { 'token': window.location.search.split('token=')[1], 'groupId': $('#selectedChat').attr('groupId'), 'content': data.result, type: 1 }, (...args) => showNewMsg(...args));
+                        $('#img').replaceWith($('#img').val('').clone(true));
                     },
                     error: function () {
                         alert("上传失败！");
                     }
                 });
-                // let file = $('#img').get(0).files[0];    //得到该图片
-                // let reader = new FileReader();           //创建一个FileReader对象，进行下一步的操作
-                // reader.readAsDataURL(file);              //通过readAsDataURL读取图片
-                // reader.onload = function () {            //读取完毕会自动触发，读取结果保存在result中
-                //     that.socket.emit('sendMsg', { 'senderId': 1, 'userName': '1号用户', 'groupId': $('#selectedChat').attr('groupId'), 'content': this.result, type: 1 });
-                // }
             }
         })
         this.socket.on('changeStatus', (sender) => {

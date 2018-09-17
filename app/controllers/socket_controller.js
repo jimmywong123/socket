@@ -86,12 +86,14 @@ exports.api = {
                         else
                             receiver.id = tempReceiver.id;
                         //在数据库查询这两个用户之前有没有建过私聊群，如果没有则新建私聊群
-                        if (!await groupService.checkExist(sender, receiver, transaction)) {
+                        let groups = await groupService.findBySenderAndReceiver(sender, receiver, transaction)
+                        if (groups.length==0) {
                             group.managerId = sender.id;
                             group.isPrivate = 1;
                             group.lastTime = new Date();
                             await groupService.create(group, sender, receiver, transaction);
-                        }
+                        }else
+                            sender.curGroup = groups[0];
                     }
                     transaction.commit();
                 } catch (error) {
