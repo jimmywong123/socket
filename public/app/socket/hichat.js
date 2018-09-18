@@ -1,6 +1,5 @@
 "use strict"
 
-//import io from '../../jspm_packages/npm/socket.io-client@2.1.1/dist/socket.io'
 import { format } from '../util/dateUtil'
 import io from 'socket.io-client'
 
@@ -22,7 +21,7 @@ HiChat.prototype = {
     init: function () {//此方法初始化程序
         var that = this;
         //建立到服务器的socket连接
-        //this.socket = io.connect('http://localhost:3001/hiredchina');
+        //this.socket = io.connect('http://192.168.31.107:3001/hiredchina');
         this.socket = io.connect('http://120.79.243.235:3001/hiredchina');
         //查询最近的聊天群
         this.socket.emit('queryLastContacts', { 'token': window.location.search.split('token=')[1] }, (...args) => lastContacts(...args));
@@ -76,6 +75,7 @@ HiChat.prototype = {
                 } else
                     $('#userList').children('li:first-child').click();//打开联系人列表时默认选中第一个对话框
                 $('#sendBtn').attr('senderId', sender.id);
+                $('#sendBtn').attr('senderIp', sender.ip);
             }
         }
         //点击头像时查询最近的聊天记录
@@ -138,7 +138,7 @@ HiChat.prototype = {
                 scrollHeight += $(this).height();
             })
             if (scrollTop + windowHeight == scrollHeight)  //滚动到底部执行事件  
-                that.socket.emit('queryLastContacts', { 'token': window.location.search.split('token=')[1], 'lastTime': $(this).children('li:last-child').attr('lastTime') },
+                that.socket.emit('queryLastContacts', { 'lastTime': $(this).children('li:last-child').attr('lastTime') },
                     (...args) => lastContacts(...args));
         });
         //监听聊天窗口上拉事件
@@ -154,7 +154,7 @@ HiChat.prototype = {
                 alert("发送内容不能为空");
             } else {
                 //'ip':window.location.host,
-                that.socket.emit('sendMsg', { 'token': window.location.search.split('token=')[1], 'groupId': $('#selectedChat').attr('groupId'), 'content': $('#message').val(), type: 0 },
+                that.socket.emit('sendMsg', { 'groupId': $('#selectedChat').attr('groupId'), 'content': $('#message').val(), type: 0 },
                     (...args) => showNewMsg(...args));
                 $('#message').val('');
             }
@@ -212,15 +212,30 @@ HiChat.prototype = {
                     }
                 })
                 if (chatOrMsg == 'chat') {
-                    let chatHtml = `<div class='name' receiverId='${msg.sender.id}'>${msg.sender.name}</div>
-                    <img class='img' src='${msg.sender.img}' style='width:50px;height:50px'/>
-                    <div class='lastTime'>${format(msg.createDate)}</div>
-                    <div class='lastContent'>${msg.content}</div>
-                    <div class='noRead'>${msg.noRead}</div>
-                    <div class='status'>online</div>`;
+                    let chatHtml = `<li class='group' groupId='${msg.group.id}' lastTime='${msg.group.lastTime}' isPrivate='${msg.group.isPrivate}'>`;
+                    if (msg.group.isPrivate == true) {
+                        chatHtml += `<div class='name' receiverId='${msg.sender.id}'>${msg.sender.name}</div>
+                        <img class='img' src='${msg.sender.img}' style='width:50px;height:50px'/>
+                        <div class='lastTime'>${format(msg.createDate)}</div>`;
+                        if (msg.type == 0)
+                            chatHtml += `<div>${msg.content}</div>`;
+                        else if (msg.type == 1)
+                            chatHtml += `<img src='${msg.content}'></div>`;
+                        chatHtml += `<div class='noRead'>${msg.noRead}</div>
+                        <div class='status'>online</div>`;
+                    } else {
+                        chatHtml += `<div class='name'>${msg.group.name}</div>
+                            <img class='img' src='${msg.group.img}' style='width:50px;height:50px'/>
+                            <div class='lastTime'>${format(msg.group.lastTime)}</div>`;
+                        if (msg.type == 0)
+                            chatHtml += `<div class='lastContent'>${msg.group.lastContent}</div>`;
+                        else if (msg.type == 1)
+                            chatHtml += `[图片]`;
+                        chatHtml += `<div class='noRead'>${msg.noRead}</div>`;
+                    }
+                    chatHtml += `</li>`;
                     $('#userList').prepend(chatHtml);
                     //如果是新的群聊，则msg应包含isprivate属性，并包含群信息。。。
-
                 }
             }
             //有新消息的聊天群应浮动到最上方
@@ -250,7 +265,7 @@ HiChat.prototype = {
                     processData: false,//必须false才会避开jQuery对 formdata 的默认处理，XMLHttpRequest会对 formdata 进行正确的处理
                     success: function (data) {
                         //上传到七牛后，将链接发给socket
-                        that.socket.emit('sendMsg', { 'token': window.location.search.split('token=')[1], 'groupId': $('#selectedChat').attr('groupId'), 'content': data.result, type: 1 }, (...args) => showNewMsg(...args));
+                        that.socket.emit('sendMsg', { 'groupId': $('#selectedChat').attr('groupId'), 'content': data.result, type: 1 }, (...args) => showNewMsg(...args));
                         $('#img').replaceWith($('#img').val('').clone(true));
                     },
                     error: function () {
@@ -269,39 +284,8 @@ HiChat.prototype = {
                 }
             })
         })
-        // $(window).unload(function(){
-        //     //响应事件
-        //     alert("获取到了页面要关闭的事件了！"); 
-        // }); 
-        // window.onbeforeunload = function(){
-
-        //     var  n  =  window.event.screenX  -  window.screenLeft; 
-
-        //     var  b  =  n  >  document.documentElement.scrollWidth-20; 
-
-        //     if(b  &&  window.event.clientY  <  0  ||  window.event.altKey) 
-
-        //     {  //页面关闭
-        //         alert(123);
-
-        //     }else{
-
-        //         页面刷新   
-
-        //   } 
-
-        //}
-        // $.ajax({
-        //     type: "post",
-        //     url: "/socket/sendMsg",
-        //     data: { id: '1' },
-        //     dataType: "json",
-        //     success: function (data) {
-        //         alert(`ajax-${data}`);
-        //     }
-        // });
-        // this.socket.on('test', function (test) {
-        //     alert(`test-${test}`);
-        // })
+        $(window).on("unload", function () {
+            that.socket.emit('offline');
+        });
     }
 };

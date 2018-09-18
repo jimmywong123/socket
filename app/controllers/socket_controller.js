@@ -21,7 +21,7 @@ exports.api = {
         logger.info(`${this.method} /api/auth => auth, query: ${JSON.stringify(this.query)} , params: ${JSON.stringify(this.params)} , body: ${JSON.stringify(this.request.body)}`)
 
         let parameter = this.request.body;
-        let username, password;
+        let appId, appSecret;
         let sender = {};
         let receiver = {};
         let group = {};
@@ -32,29 +32,31 @@ exports.api = {
                 message: 'Enjoy your data!'
             }
         try {
-            username = parameter.username;
-            password = parameter.password;
-            sender.originalId = parameter.senderId;
-            sender.name = parameter.senderName;
-            sender.img = parameter.senderImg;
-            sender.ip = parameter.ip;
-            receiver.originalId = parameter.receiverId;
-            receiver.name = parameter.receiverName;
-            receiver.img = parameter.receiverImg;
-            receiver.ip = parameter.ip;
+            appId = parameter.appId;
+            appSecret = parameter.appSecret;
+            sender.originalId = parameter.sender.id;
+            sender.name = parameter.sender.username;
+            sender.img = parameter.sender.img;
+            sender.ip = parameter.sender.ip;
+            if (parameter.receiver) {
+                receiver.originalId = parameter.receiver.id;
+                receiver.name = parameter.receiver.username;
+                receiver.img = parameter.receiver.img;
+                receiver.ip = parameter.receiver.ip;
+            }
         } catch (error) {
             logger.info(error);
-            editError = 'Please enter the username or password';
+            editError = 'Please enter the appId or appSecret';
         }
 
-        if (!username) {
-            editError = 'Please enter the username'
-        } else if (!password) {
-            editError = 'Please enter the password'
+        if (!appId) {
+            editError = 'Please enter the appId'
+        } else if (!appSecret) {
+            editError = 'Please enter the appSecret'
         }
 
         if (!editError) {
-            if (!(username === Config.appId && password === Config.appSecret)) {
+            if (!(appId === Config.appId && appSecret === Config.appSecret)) {
                 editError = 'the username or password error'
             }
         }
@@ -63,12 +65,6 @@ exports.api = {
             data.message = editError
             this.body = apiFormat.api_error(data)
         } else {
-            var new_token = jwt.sign({ username: username, password: password }, Config.session_secret, {
-                expiresIn: 60 * 10 // 设置过期时间10分钟
-            })
-            data.success = true;
-            data.token = new_token;
-
             let transaction, tempSender, tempReceiver;
             try {
                 transaction = await db.transaction();
@@ -100,9 +96,16 @@ exports.api = {
                 logger.info(error);
             }
 
-            cache.set(new_token, sender, 60 * 60 * 12);
-            if (parameter.ioCookie)
-                cache.set(parameter.ioCookie, sender, 60 * 60 * 24);
+            let new_token = jwt.sign({ sender: sender }, Config.session_secret, {
+                expiresIn: 60 * 10 // 设置过期时间10分钟
+            })
+            data.success = true;
+            data.token = new_token;
+
+            //cache.set(`${sender.ip}-${sender.id}`, sender, 60 * 60 * 24 * 7)
+            // cache.set(new_token, sender, 60 * 60 * 12);
+            // if (parameter.ioCookie)
+            //     cache.set(parameter.ioCookie, sender, 60 * 60 * 24);
             this.body = apiFormat.api(data)
         }
     }

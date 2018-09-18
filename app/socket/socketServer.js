@@ -6,7 +6,7 @@ const db = require('../../db')
 const cache = require('../common/cache')
 const tools = require('../common/tools');
 const log = require('../common/logger')()
-const circularJson = require('circular-json');
+const jwt = require('jsonwebtoken')//用来创建和确认用户信息摘要
 
 class socketServer {
   constructor(server) {
@@ -21,13 +21,10 @@ function ioListen(io) {
     socket.on('queryLastContacts', async function (msg, callBack) {
       log.info(`queryLastContacts======${socket.id}`)
 
-      let sender;
-      try {
-        sender = await cache.get(socket.handshake.headers.referer.split('token=')[1])
-      } catch (error) {
-        sender = await cache.get(socket.handshake.headers.cookie.split('io=')[1].split(';')[0]);
-      }
+      let query = jwt.verify(socket.handshake.headers.referer.split('token=')[1], Config.session_secret);
+      let sender = query.sender;
 
+      msg == undefined ? msg = new Object() : null;
       msg.senderId = sender.id;
       msg.ip = sender.ip;
       sender.status = 'online';//在线
@@ -94,12 +91,8 @@ function ioListen(io) {
     socket.on('sendMsg', async function (msg, callBack) {//发送信息
       log.info(`sendMsg======${socket.id}`)
 
-      let sender;
-      try {
-        sender = await cache.get(socket.handshake.headers.referer.split('token=')[1])
-      } catch (error) {
-        sender = await cache.get(socket.handshake.headers.cookie.split('io=')[1].split(';')[0]);
-      }
+      let query = jwt.verify(socket.handshake.headers.referer.split('token=')[1], Config.session_secret);
+      let sender = query.sender;
 
       //完善msg，将msg存入数据库
       msg.ip = sender.ip;
@@ -119,6 +112,7 @@ function ioListen(io) {
         group.lastTime = msg.createDate;
         group.type = msg.type;
         await groupService.update(group, transaction);
+        group = await groupService.findById(msg.groupId, transaction);
         //获取此群下接收者的用户id
         receiverIds = await socketUserService.findByGroupId(msg, transaction);
         for (i in receiverIds) {
@@ -126,6 +120,7 @@ function ioListen(io) {
           //查询接收者在此群下有多少未读消息
           let msgList = await msgService.queryNoRead(msg.ip, receiverIds[i].id, msg.groupId, transaction)
           msg.noRead = msgList.length;
+          msg.group = group;
           socket.to(`${sender.ip}-${receiverIds[i].id}`).emit('newMsg', msg);//将消息发送给接收者
         }
         callBack(msg, true);
@@ -136,33 +131,30 @@ function ioListen(io) {
       }
     });
     //监听用户离线事件
-    socket.on('disconnect', async (reason) => {
-      log.info(`disconnect======${socket.id}======${reason}`)
-      try {
-        let sender = await cache.get(socket.handshake.headers.cookie.split('io=')[1].split(';')[0]);
-        if (sender != null) {
-          //查询该用户是否还有socket连接
-          io.in(`${sender.ip}-${sender.id}`).clients((error, clients) => {
-            clients.length > 0 ? sender.status = 'online' : sender.status = 'offline'
-            //通知所有人下线
-            if (sender.status == 'offline')
-              socket.broadcast.emit('changeStatus', sender);
-          });
-        }
-      } catch (error) {
-      }
-    });
+    // socket.on('disconnect', async (reason) => {
+    //   log.info(`disconnect======${socket.id}======${reason}`)
+    //   try {
+    //     let sender = await cache.get(socket.handshake.headers.cookie.split('io=')[1].split(';')[0]);
+    //     if (sender != null) {
+    //       //查询该用户是否还有socket连接
+    //       io.in(`${sender.ip}-${sender.id}`).clients((error, clients) => {
+    //         clients.length > 0 ? sender.status = 'online' : sender.status = 'offline'
+    //         //通知所有人下线
+    //         if (sender.status == 'offline')
+    //           socket.broadcast.emit('changeStatus', sender);
+    //       });
+    //     }
+    //   } catch (error) {
+    //   }
+    // });
 
     //监听查询未读数事件
     socket.on('queryNoRead', async (msg, callBack) => {
       log.info(`queryNoRead======${socket.id}`)
 
-      let sender;
-      try {
-        sender = await cache.get(socket.handshake.headers.referer.split('token=')[1])
-      } catch (error) {
-        sender = await cache.get(socket.handshake.headers.cookie.split('io=')[1].split(';')[0]);
-      }
+      let query = jwt.verify(msg.token, Config.session_secret);
+      let sender = query.sender;
+
       sender.status = 'online';
       socket.join(`${sender.ip}-${sender.id}`)
       //通知所有人上线
@@ -185,12 +177,9 @@ function ioListen(io) {
       log.info(`haveRead======${socket.id}`);
 
       if (msg.noRead) {
-        let sender;
-        try {
-          sender = await cache.get(socket.handshake.headers.referer.split('token=')[1])
-        } catch (error) {
-          sender = await cache.get(socket.handshake.headers.cookie.split('io=')[1].split(';')[0]);
-        }
+        let query = jwt.verify(socket.handshake.headers.referer.split('token=')[1], Config.session_secret);
+        let sender = query.sender;
+
         let transaction;
         try {
           transaction = await db.transaction();
@@ -204,6 +193,23 @@ function ioListen(io) {
         }
       }
     });
+    //监听用户离线事件
+    socket.on('offline', async (token) => {
+      let query;
+      try {
+        query = jwt.verify(socket.handshake.headers.referer.split('token=')[1], Config.session_secret);
+      } catch (error) {
+        query = jwt.verify(token, Config.session_secret);
+      }
+      let sender = query.sender;
+      //查询该用户是否还有socket连接
+      io.in(`${sender.ip}-${sender.id}`).clients((error, clients) => {
+        clients.length > 1 ? sender.status = 'online' : sender.status = 'offline'
+        //通知所有人下线
+        if (sender.status == 'offline')
+          socket.broadcast.emit('changeStatus', sender);
+      });
+    })
   })
 }
 
