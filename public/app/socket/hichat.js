@@ -86,7 +86,8 @@ HiChat.prototype = {
             $(this).attr('id', 'selectedChat');
             that.socket.emit('queryChat', { 'groupId': $(this).attr('groupId'), 'noRead': $(this).children('.noRead').html() }, (...args) => lastChat(...args));
             that.socket.emit('haveRead', { 'groupId': $(this).attr('groupId'), 'noRead': $(this).children('.noRead').html() }, () => {
-                $(this).children('.noRead').html(`<div class='noRead'></div>`);
+                console.log(this);
+                $(this).children('.noRead').html('');
             });
         });
         //监听服务端返回的最近聊天信息

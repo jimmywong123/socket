@@ -195,6 +195,7 @@ function ioListen(io) {
         try {
           transaction = await db.transaction();
           await msgService.deleteNoRead(msg, sender, transaction);
+          log.info(callBack);
           callBack == undefined ? null : callBack();
           transaction.commit();
         } catch (error) {
