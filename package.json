@@ -111,13 +111,15 @@
     },
     "dependencies": {
       "babel-core": "npm:babel-core@5.8.38",
-      "bootstrap": "github:twbs/bootstrap@^3.3.7",
+      "bootstrap": "github:twbs/bootstrap@3.3.7",
       "cropper": "npm:cropper@^2.3.4",
       "css": "github:systemjs/plugin-css@^0.1.26",
       "jquery": "github:components/jquery@^3.1.0",
       "socket.io": "npm:socket.io@^2.1.1",
       "socket.io-client": "github:socketio/socket.io-client@^2.1.1",
-      "socket.io-parser": "npm:socket.io-parser@^3.2.0"
+      "socket.io-parser": "npm:socket.io-parser@^3.2.0",
+      "tooltip": "npm:tooltip@^1.6.1",
+      "twbs/bootstrap": "github:twbs/bootstrap@3.3.7"
     },
     "devDependencies": {
       "babel": "npm:babel-core@^5.8.24",
@@ -129,6 +131,11 @@
     "buildConfig": {
       "transpileES6": true,
       "minify": true
+    },
+    "overrides": {
+      "github:twbs/bootstrap@3.3.7": {
+        "jspmPackage": true
+      }
     }
   }
 }
