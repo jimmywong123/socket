@@ -97,15 +97,11 @@ exports.api = {
             }
 
             let new_token = jwt.sign({ sender: sender }, Config.session_secret, {
-                expiresIn: 60 * 10 // 设置过期时间10分钟
+                expiresIn: 60 * 60 * 24 * 3 // 设置过期时间
             })
             data.success = true;
             data.token = new_token;
 
-            //cache.set(`${sender.ip}-${sender.id}`, sender, 60 * 60 * 24 * 7)
-            // cache.set(new_token, sender, 60 * 60 * 12);
-            // if (parameter.ioCookie)
-            //     cache.set(parameter.ioCookie, sender, 60 * 60 * 24);
             this.body = apiFormat.api(data)
         }
     }

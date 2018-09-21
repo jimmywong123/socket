@@ -28,7 +28,7 @@ exports.queryLastContacts = async function (msg, transaction) {
         option.where = { lastTime: { $lt: msg.lastTime } };
     let recentGroupList = await group.findAll(option)
     let groupIds = recentGroupList.map(item => item.id)
-    groupIds = groupIds.slice(0, 10);
+    groupIds = groupIds.slice(0, 30);
     //查询出这些群的信息及群下的用户信息
     let groupList = await group.findAll({
         include: [{
