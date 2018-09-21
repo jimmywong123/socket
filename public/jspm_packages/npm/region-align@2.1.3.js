@@ -1,0 +1,1 @@
+module.exports = require("npm:region-align@2.1.3/index.js");

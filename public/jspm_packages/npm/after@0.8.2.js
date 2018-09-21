@@ -1,0 +1,1 @@
+module.exports = require("npm:after@0.8.2/index");

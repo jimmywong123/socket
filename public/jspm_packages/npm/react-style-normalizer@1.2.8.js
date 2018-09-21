@@ -1,0 +1,1 @@
+module.exports = require("npm:react-style-normalizer@1.2.8/src/index.js");

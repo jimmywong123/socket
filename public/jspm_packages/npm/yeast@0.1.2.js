@@ -1,0 +1,1 @@
+module.exports = require("npm:yeast@0.1.2/index.js");

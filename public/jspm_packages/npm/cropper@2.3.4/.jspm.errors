@@ -1,0 +1,217 @@
+MultipleErrors: /Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/bind.js:1:11: Unexpected reserved word function
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/bind.js:1:20: Unexpected token )
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/bind.js:1:23: Semi-colon expected
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/bind.js:43:6: Unexpected token ,
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/bind.js:45:13: Unexpected reserved word function
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/bind.js:45:22: Unexpected token )
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/bind.js:45:25: Semi-colon expected
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/bind.js:87:6: Unexpected token ,
+
+MultipleErrors: /Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/build.js:1:12: Unexpected reserved word function
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/build.js:1:21: Unexpected token )
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/build.js:1:24: Semi-colon expected
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/build.js:10:9: Illegal return statement
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/build.js:87:6: Unexpected token ,
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/build.js:89:14: Unexpected reserved word function
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/build.js:89:23: Unexpected token )
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/build.js:89:26: Semi-colon expected
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/build.js:91:9: Illegal return statement
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/build.js:123:6: Unexpected token ,
+
+MultipleErrors: /Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/change.js:1:13: Unexpected reserved word function
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/change.js:1:40: Semi-colon expected
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/change.js:402:6: Unexpected token ,
+
+MultipleErrors: /Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/handlers.js:1:13: Unexpected reserved word function
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/handlers.js:1:22: Unexpected token )
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/handlers.js:1:25: Semi-colon expected
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/handlers.js:11:9: Illegal return statement
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/handlers.js:34:6: Unexpected token ,
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/handlers.js:36:15: Unexpected reserved word function
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/handlers.js:36:24: Unexpected token )
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/handlers.js:36:27: Semi-colon expected
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/handlers.js:38:9: Illegal return statement
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/handlers.js:46:6: Unexpected token ,
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/handlers.js:48:12: Unexpected reserved word function
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/handlers.js:48:29: Semi-colon expected
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/handlers.js:54:9: Illegal return statement
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/handlers.js:61:9: Illegal return statement
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/handlers.js:79:6: Unexpected token ,
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/handlers.js:81:16: Unexpected reserved word function
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/handlers.js:81:33: Semi-colon expected
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/handlers.js:90:9: Illegal return statement
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/handlers.js:103:13: Illegal return statement
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/handlers.js:117:11: Illegal return statement
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/handlers.js:135:6: Unexpected token ,
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/handlers.js:137:15: Unexpected reserved word function
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/handlers.js:137:32: Semi-colon expected
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/handlers.js:146:9: Illegal return statement
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/handlers.js:158:13: Illegal return statement
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/handlers.js:170:11: Illegal return statement
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/handlers.js:180:6: Unexpected token ,
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/handlers.js:182:14: Unexpected reserved word function
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/handlers.js:182:31: Semi-colon expected
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/handlers.js:187:9: Illegal return statement
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/handlers.js:205:6: Unexpected token ,
+
+MultipleErrors: /Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/init.js:218:1: Unexpected token End of File
+
+MultipleErrors: /Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/intro.js:25:1: Unexpected token End of File
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/intro.js:25:1: Unexpected token End of File
+
+MultipleErrors: /Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/outro.js:1:1: Unexpected token }
+
+MultipleErrors: /Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:2:11: Unexpected reserved word function
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:2:20: Unexpected token )
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:2:23: Semi-colon expected
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:4:9: Illegal return statement
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:19:6: Unexpected token ,
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:22:12: Unexpected reserved word function
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:22:21: Unexpected token )
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:22:24: Semi-colon expected
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:24:9: Illegal return statement
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:36:6: Unexpected token ,
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:39:12: Unexpected reserved word function
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:39:21: Unexpected token )
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:39:24: Semi-colon expected
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:41:9: Illegal return statement
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:61:6: Unexpected token ,
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:69:14: Unexpected reserved word function
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:69:47: Semi-colon expected
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:92:6: Unexpected token ,
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:95:13: Unexpected reserved word function
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:95:22: Unexpected token )
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:95:25: Semi-colon expected
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:100:6: Unexpected token ,
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:103:14: Unexpected reserved word function
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:103:23: Unexpected token )
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:103:26: Semi-colon expected
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:108:6: Unexpected token ,
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:111:14: Unexpected reserved word function
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:111:23: Unexpected token )
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:111:26: Semi-colon expected
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:130:6: Unexpected token ,
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:138:11: Unexpected reserved word function
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:138:39: Semi-colon expected
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:145:6: Unexpected token ,
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:153:13: Unexpected reserved word function
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:153:29: Semi-colon expected
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:180:6: Unexpected token ,
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:188:11: Unexpected reserved word function
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:188:36: Semi-colon expected
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:200:6: Unexpected token ,
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:208:13: Unexpected reserved word function
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:208:38: Semi-colon expected
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:236:11: Illegal return statement
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:264:6: Unexpected token ,
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:271:13: Unexpected reserved word function
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:271:31: Semi-colon expected
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:273:6: Unexpected token ,
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:281:15: Unexpected reserved word function
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:281:33: Semi-colon expected
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:289:6: Unexpected token ,
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:298:12: Unexpected reserved word function
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:298:38: Semi-colon expected
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:325:6: Unexpected token ,
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:332:13: Unexpected reserved word function
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:332:31: Semi-colon expected
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:336:6: Unexpected token ,
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:343:13: Unexpected reserved word function
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:343:31: Semi-colon expected
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:347:6: Unexpected token ,
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:355:14: Unexpected reserved word function
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:355:35: Semi-colon expected
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:396:7: Illegal return statement
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:397:6: Unexpected token ,
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:404:14: Unexpected reserved word function
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:404:30: Semi-colon expected
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:463:6: Unexpected token ,
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:470:23: Unexpected reserved word function
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:470:32: Unexpected token )
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:470:35: Semi-colon expected
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:471:7: Illegal return statement
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:472:6: Unexpected token ,
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:479:19: Unexpected reserved word function
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:479:28: Unexpected token )
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:479:31: Semi-colon expected
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:480:7: Illegal return statement
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:481:6: Unexpected token ,
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:488:20: Unexpected reserved word function
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:488:29: Unexpected token )
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:488:32: Semi-colon expected
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:505:7: Illegal return statement
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:506:6: Unexpected token ,
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:513:20: Unexpected reserved word function
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:513:36: Semi-colon expected
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:540:6: Unexpected token ,
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:547:21: Unexpected reserved word function
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:547:30: Unexpected token )
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:547:33: Semi-colon expected
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:560:7: Illegal return statement
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:561:6: Unexpected token ,
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:568:21: Unexpected reserved word function
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:568:37: Semi-colon expected
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:608:6: Unexpected token ,
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:616:23: Unexpected reserved word function
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:616:42: Semi-colon expected
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:630:9: Illegal return statement
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:634:9: Illegal return statement
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:734:7: Illegal return statement
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:735:6: Unexpected token ,
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:742:21: Unexpected reserved word function
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:742:44: Semi-colon expected
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:758:6: Unexpected token ,
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:765:18: Unexpected reserved word function
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:765:34: Semi-colon expected
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/methods.js:790:3: Unexpected token }
+
+MultipleErrors: /Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/preview.js:1:18: Unexpected reserved word function
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/preview.js:1:27: Unexpected token )
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/preview.js:1:30: Semi-colon expected
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/preview.js:32:6: Unexpected token ,
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/preview.js:34:19: Unexpected reserved word function
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/preview.js:34:28: Unexpected token )
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/preview.js:34:31: Semi-colon expected
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/preview.js:44:6: Unexpected token ,
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/preview.js:46:14: Unexpected reserved word function
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/preview.js:46:23: Unexpected token )
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/preview.js:46:26: Semi-colon expected
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/preview.js:58:9: Illegal return statement
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/preview.js:100:6: Unexpected token ,
+
+MultipleErrors: /Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/render.js:1:13: Unexpected reserved word function
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/render.js:1:22: Unexpected token )
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/render.js:1:25: Semi-colon expected
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/render.js:11:6: Unexpected token ,
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/render.js:13:20: Unexpected reserved word function
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/render.js:13:29: Unexpected token )
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/render.js:13:32: Semi-colon expected
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/render.js:29:6: Unexpected token ,
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/render.js:32:17: Unexpected reserved word function
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/render.js:32:26: Unexpected token )
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/render.js:32:29: Semi-colon expected
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/render.js:78:6: Unexpected token ,
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/render.js:80:18: Unexpected reserved word function
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/render.js:80:62: Semi-colon expected
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/render.js:188:6: Unexpected token ,
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/render.js:190:19: Unexpected reserved word function
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/render.js:190:40: Semi-colon expected
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/render.js:268:6: Unexpected token ,
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/render.js:270:18: Unexpected reserved word function
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/render.js:270:39: Semi-colon expected
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/render.js:307:6: Unexpected token ,
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/render.js:309:18: Unexpected reserved word function
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/render.js:309:27: Unexpected token )
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/render.js:309:30: Semi-colon expected
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/render.js:341:6: Unexpected token ,
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/render.js:343:19: Unexpected reserved word function
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/render.js:343:63: Semi-colon expected
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/render.js:407:6: Unexpected token ,
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/render.js:409:20: Unexpected reserved word function
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/render.js:409:29: Unexpected token )
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/render.js:409:32: Semi-colon expected
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/render.js:452:6: Unexpected token ,
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/render.js:454:13: Unexpected reserved word function
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/render.js:454:22: Unexpected token )
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/render.js:454:25: Semi-colon expected
+/Users/jimmy/.jspm/packages/npm/cropper@2.3.4/src/js/render.js:460:6: Unexpected token ,

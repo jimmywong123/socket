@@ -1,0 +1,1 @@
+module.exports = require("npm:matches-selector@1.2.0/index");

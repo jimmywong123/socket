@@ -1,0 +1,1 @@
+module.exports = require("npm:tooltip@1.6.1/src/index.js");

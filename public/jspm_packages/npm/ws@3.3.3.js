@@ -1,0 +1,1 @@
+module.exports = require("npm:ws@3.3.3/index.js");

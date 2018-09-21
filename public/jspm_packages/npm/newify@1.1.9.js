@@ -1,0 +1,1 @@
+module.exports = require("npm:newify@1.1.9/index.js");

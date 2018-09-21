@@ -1,0 +1,1 @@
+module.exports = require("npm:clone@1.0.4/clone.js");

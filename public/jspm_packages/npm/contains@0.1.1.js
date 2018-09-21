@@ -1,0 +1,1 @@
+module.exports = require("npm:contains@0.1.1/index");

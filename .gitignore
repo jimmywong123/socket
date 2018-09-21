@@ -22,7 +22,7 @@ desktop.ini
 
 .idea
 public/upload/*
-public/jspm_packages/*
+# public/jspm_packages/*
 
 *.sublime-project
 *.sublime-workspace

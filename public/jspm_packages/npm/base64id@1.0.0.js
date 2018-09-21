@@ -1,0 +1,1 @@
+module.exports = require("npm:base64id@1.0.0/lib/base64id.js");
